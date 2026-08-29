@@ -1,158 +1,1874 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>EduFísica Chile PRO</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>EduFísica Chile</title>
+
 <style>
-:root{--bg:#f5f7fb;--ink:#10233f;--muted:#6d7d91;--blue:#155eef;--cyan:#00c2ff;--green:#12b76a;--orange:#ff8a00;--purple:#7a5af8;--pink:#f04492;--line:#e4eaf2;--shadow:0 18px 50px rgba(16,35,63,.09)}
-*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 0 0,#dff8ff 0,transparent 25%),radial-gradient(circle at 100% 0,#eee8ff 0,transparent 25%),var(--bg);font-family:Inter,Segoe UI,Arial,sans-serif;color:var(--ink)}
-button,input,select,textarea{font:inherit}button{cursor:pointer}.app{display:grid;grid-template-columns:245px 1fr;min-height:100vh}
-.side{position:sticky;top:0;height:100vh;padding:18px 14px;background:rgba(255,255,255,.88);backdrop-filter:blur(18px);border-right:1px solid var(--line);display:flex;flex-direction:column;z-index:20}
-.logo{display:flex;align-items:center;gap:11px;padding:9px 8px 20px}.logoIcon{width:48px;height:48px;border-radius:16px;background:linear-gradient(135deg,var(--blue),var(--cyan));display:grid;place-items:center;font-size:25px;color:#fff;box-shadow:0 12px 28px #155eef30}.logo b{font-size:18px}.logo small{display:block;color:var(--muted);margin-top:3px}
-.nav{display:grid;gap:7px}.nav button{border:0;background:transparent;text-align:left;padding:13px 14px;border-radius:15px;color:#53667b;font-weight:850}.nav button:hover{background:#eef5ff;color:var(--blue)}.nav button.active{background:linear-gradient(135deg,#155eef,#00b8f0);color:#fff;box-shadow:0 10px 25px #155eef25}.sideFoot{margin-top:auto;padding:13px;border-radius:17px;background:linear-gradient(135deg,#eef7ff,#f3fff9);font-size:11px;color:#58708a}
-.main{min-width:0}.top{position:sticky;top:0;z-index:15;padding:12px 25px;background:rgba(245,247,251,.8);backdrop-filter:blur(18px);border-bottom:1px solid #fff}.topbar{display:flex;justify-content:space-between;align-items:center;gap:12px;max-width:1350px;margin:auto}.crumb{font-size:12px;color:var(--muted)}.topActions{display:flex;gap:8px}.content{max-width:1350px;margin:auto;padding:24px 25px 70px}.page{display:none}.page.active{display:block;animation:in .3s ease}@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
-.hero{position:relative;overflow:hidden;color:#fff;border-radius:30px;padding:31px;background:linear-gradient(125deg,#092447,#155eef 55%,#00b8f0);box-shadow:0 25px 60px #155eef20;margin-bottom:20px}.hero:after{content:"🏀   ⚽   🏐   🏃   🥇";position:absolute;right:25px;bottom:18px;font-size:35px;opacity:.18}.hero h1{margin:0 0 7px;font-size:36px;letter-spacing:-.04em}.hero p{margin:0;max-width:760px;line-height:1.55;opacity:.9}
-.stats,.grid4,.courseGrid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.stats{margin-bottom:20px}.stat,.card,.form,.oaCard,.saved,.planner{background:rgba(255,255,255,.93);border:1px solid var(--line);box-shadow:var(--shadow);border-radius:22px}.stat{padding:18px}.stat b{display:block;font-size:28px;margin:5px 0;color:var(--blue)}.stat span{font-size:12px;color:var(--muted)}.card{padding:21px;transition:.2s;cursor:pointer}.card:hover,.oaCard:hover,.saved:hover{transform:translateY(-5px);box-shadow:0 25px 60px #10233f15}.icon{font-size:30px}.card h3{margin:10px 0 5px}.card p{margin:0;color:var(--muted);font-size:13px;line-height:1.5}
-.toolbar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:16px}.toolbar input,.toolbar select{max-width:260px}.input,select,textarea{width:100%;padding:12px 13px;border:1px solid #dbe4ee;border-radius:13px;background:#fff;outline:0}.input:focus,select:focus,textarea:focus{border-color:#7898ff;box-shadow:0 0 0 4px #155eef12}
-.course{padding:20px;min-height:145px;border-radius:23px;color:#fff;cursor:pointer;box-shadow:var(--shadow);transition:.2s;background:linear-gradient(135deg,#155eef,#00b8f0)}.course:nth-child(4n+2){background:linear-gradient(135deg,#12b76a,#00c2ff)}.course:nth-child(4n+3){background:linear-gradient(135deg,#7a5af8,#f04492)}.course:nth-child(4n){background:linear-gradient(135deg,#ff8a00,#ffd43b);color:#18243a}.course:hover{transform:translateY(-5px)}
-.oaList{display:grid;gap:12px}.oaCard{padding:18px;cursor:pointer;transition:.2s;border-left:5px solid var(--blue)}.oaTop{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}.code{display:inline-block;padding:5px 8px;border-radius:999px;background:#eaf2ff;color:var(--blue);font-size:10px;font-weight:950}.axis{font-size:10px;color:#12a06a;background:#eafaf3;padding:5px 8px;border-radius:999px;font-weight:850}.oaCard h3{font-size:15px;margin:10px 0 7px}.oaCard p{margin:0;color:#63758a;line-height:1.55;font-size:13px}
-.form{padding:22px}.fields{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}.full{grid-column:1/-1}label{font-size:12px;font-weight:900;display:block;margin-bottom:6px}.btn{border:0;border-radius:13px;padding:12px 16px;font-weight:900}.primary{background:linear-gradient(135deg,var(--blue),var(--cyan));color:#fff;box-shadow:0 10px 25px #155eef25}.secondary{background:#eef4ff;color:var(--blue)}.green{background:#eafaf2;color:#0c8b54}.orange{background:#fff3dd;color:#a96000}
-.plan{background:#fff;border-radius:24px;overflow:hidden;border:1px solid var(--line);box-shadow:var(--shadow);margin-top:18px}.planHead{padding:24px;color:#fff;background:linear-gradient(125deg,#092447,#155eef 60%,#12b76a)}.planHead h2{margin:0 0 6px}.chips span{display:inline-block;background:#ffffff22;border:1px solid #ffffff30;padding:5px 8px;border-radius:999px;font-size:10px;margin:3px}.planGrid{display:grid;grid-template-columns:1fr 1fr;gap:13px;padding:18px}.box{border:1px solid var(--line);border-left:5px solid var(--blue);border-radius:15px;padding:16px;background:#fbfcfe}.box h4{margin:0 0 8px}.rubric{width:100%;border-collapse:collapse}.rubric th,.rubric td{border:1px solid var(--line);padding:10px;font-size:12px;vertical-align:top}.rubric th{background:#edf4ff}
-.planner{padding:15px;overflow:auto}.plannerHead{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:12px}.weekGrid{display:grid;grid-template-columns:100px repeat(5,minmax(145px,1fr));min-width:850px}.cell{min-height:76px;border:1px solid #e4eaf2;padding:7px;background:#fff}.day{background:#edf5ff;color:var(--blue);text-align:center;font-weight:900;min-height:55px}.today{outline:3px solid #155eef;outline-offset:-3px}.slot{font-size:10px;color:#6d7d91}.class{background:linear-gradient(135deg,#155eef,#00b8f0);color:#fff;border-radius:11px;padding:8px;cursor:pointer;font-size:11px;font-weight:800}.empty{height:55px;display:grid;place-items:center;color:#a2afbd;cursor:pointer;border-radius:10px}.empty:hover{background:#f1f6ff;color:var(--blue)}
-.saved{padding:16px;display:flex;justify-content:space-between;gap:10px;align-items:center;margin-bottom:10px}.saved b{display:block}.saved small{color:var(--muted)}.actions{display:flex;gap:7px;flex-wrap:wrap}.objectivePreview{margin-top:16px;padding:17px;border:1px solid #dbe5f0;border-radius:17px;background:linear-gradient(135deg,#f8fbff,#f2fffa)}
-.objectivePreview b{color:#155eef}.levelBadge{display:inline-block;padding:5px 9px;border-radius:999px;background:#efeaff;color:#6941c6;font-size:10px;font-weight:950;margin-left:6px}
-.dateRow{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-.helper{font-size:11px;color:#718096;margin-top:5px}
-.toast{position:fixed;right:20px;bottom:20px;background:#092447;color:#fff;padding:13px 17px;border-radius:13px;opacity:0;transform:translateY(8px);transition:.25s;z-index:100}.toast.show{opacity:1;transform:none}
-.modal{display:none;position:fixed;inset:0;background:#071a2bcc;z-index:100;align-items:center;justify-content:center;padding:18px}.modal.show{display:flex}.modalBox{width:min(1000px,100%);max-height:92vh;overflow:auto;background:#fff;border-radius:25px}.modalTop{position:sticky;top:0;background:#fff;padding:13px 18px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;z-index:2}
-@media(max-width:1050px){.app{grid-template-columns:82px 1fr}.side{padding:12px 9px}.logo b,.logo small,.nav button span,.sideFoot{display:none}.logo{justify-content:center}.nav button{text-align:center;padding:13px 7px}.stats,.grid4,.courseGrid{grid-template-columns:1fr 1fr}}
-@media(max-width:650px){.app{display:block}.side{position:fixed;bottom:0;top:auto;left:0;right:0;width:100%;height:68px;display:block;padding:6px;background:#fff;border-top:1px solid var(--line);border-right:0}.logo,.sideFoot{display:none}.nav{display:flex;justify-content:space-around}.nav button{font-size:0;padding:9px;min-width:52px}.nav button::first-letter{font-size:20px}.content{padding:16px 12px 90px}.hero h1{font-size:28px}.stats,.grid4,.courseGrid,.fields{grid-template-columns:1fr}.full{grid-column:auto}.planGrid{grid-template-columns:1fr}}
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+body{
+    background:#f3f7fb;
+    color:#172033;
+}
+
+button{
+    border:0;
+    cursor:pointer;
+}
+
+.app{
+    min-height:100vh;
+}
+
+/* LOGIN */
+
+.login-screen{
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:20px;
+    background:linear-gradient(135deg,#071b3a,#0b65c2,#19b7d8);
+}
+
+.login-box{
+    width:100%;
+    max-width:430px;
+    background:white;
+    padding:30px;
+    border-radius:25px;
+    box-shadow:0 20px 50px rgba(0,0,0,.25);
+}
+
+.logo{
+    text-align:center;
+    margin-bottom:25px;
+}
+
+.logo-icon{
+    width:75px;
+    height:75px;
+    margin:auto;
+    border-radius:22px;
+    background:linear-gradient(135deg,#0879d1,#12c5c9);
+    color:white;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:35px;
+    font-weight:bold;
+}
+
+.logo h1{
+    margin-top:12px;
+    font-size:28px;
+}
+
+.logo p{
+    color:#718096;
+    margin-top:5px;
+}
+
+.input{
+    width:100%;
+    padding:14px;
+    margin-top:8px;
+    margin-bottom:15px;
+    border:1px solid #d9e2ec;
+    border-radius:12px;
+    font-size:15px;
+    outline:none;
+}
+
+.input:focus{
+    border-color:#168bd2;
+}
+
+.btn{
+    width:100%;
+    padding:14px;
+    border-radius:12px;
+    background:#0879d1;
+    color:white;
+    font-weight:bold;
+    font-size:15px;
+    margin-top:5px;
+}
+
+.btn:hover{
+    opacity:.9;
+}
+
+.btn-secondary{
+    background:#eaf4fb;
+    color:#0879d1;
+}
+
+.login-message{
+    margin-top:15px;
+    text-align:center;
+    color:#d33;
+    font-size:14px;
+}
+
+/* APP */
+
+.hidden{
+    display:none!important;
+}
+
+.topbar{
+    height:70px;
+    background:white;
+    border-bottom:1px solid #e1e8ef;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:0 22px;
+    position:sticky;
+    top:0;
+    z-index:20;
+}
+
+.brand{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-size:20px;
+    font-weight:bold;
+}
+
+.brand-icon{
+    width:42px;
+    height:42px;
+    border-radius:12px;
+    background:linear-gradient(135deg,#0879d1,#16c8c0);
+    color:white;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.user-area{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.user-email{
+    font-size:13px;
+    color:#64748b;
+}
+
+.logout{
+    background:#edf3f8;
+    padding:9px 13px;
+    border-radius:10px;
+    color:#334155;
+}
+
+/* LAYOUT */
+
+.layout{
+    display:flex;
+    min-height:calc(100vh - 70px);
+}
+
+.sidebar{
+    width:245px;
+    background:#071b3a;
+    color:white;
+    padding:20px 14px;
+}
+
+.menu-title{
+    font-size:11px;
+    text-transform:uppercase;
+    color:#89a0bd;
+    margin:10px 12px;
+}
+
+.menu-btn{
+    width:100%;
+    background:transparent;
+    color:white;
+    text-align:left;
+    padding:13px;
+    border-radius:11px;
+    margin-bottom:5px;
+    font-size:14px;
+}
+
+.menu-btn:hover,
+.menu-btn.active{
+    background:#0b65c2;
+}
+
+.main{
+    flex:1;
+    padding:25px;
+    max-width:1400px;
+    margin:auto;
+    width:100%;
+}
+
+/* DASHBOARD */
+
+.welcome{
+    background:linear-gradient(135deg,#0879d1,#12bfc8);
+    color:white;
+    padding:28px;
+    border-radius:22px;
+    margin-bottom:22px;
+}
+
+.welcome h2{
+    font-size:27px;
+    margin-bottom:8px;
+}
+
+.welcome p{
+    opacity:.9;
+}
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:15px;
+    margin-bottom:25px;
+}
+
+.stat{
+    background:white;
+    border-radius:18px;
+    padding:20px;
+    border:1px solid #e3ebf2;
+}
+
+.stat-number{
+    font-size:30px;
+    font-weight:bold;
+    color:#0879d1;
+}
+
+.stat-label{
+    color:#718096;
+    margin-top:5px;
+}
+
+/* CARDS */
+
+.section-title{
+    margin-bottom:15px;
+    font-size:22px;
+}
+
+.cards{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:15px;
+}
+
+.card{
+    background:white;
+    border:1px solid #e3ebf2;
+    border-radius:18px;
+    padding:20px;
+    transition:.2s;
+}
+
+.card:hover{
+    transform:translateY(-3px);
+    box-shadow:0 8px 25px rgba(0,0,0,.08);
+}
+
+.card-icon{
+    font-size:30px;
+    margin-bottom:12px;
+}
+
+.card h3{
+    margin-bottom:7px;
+}
+
+.card p{
+    color:#718096;
+    font-size:14px;
+}
+
+/* CREATOR */
+
+.panel{
+    background:white;
+    border-radius:20px;
+    padding:22px;
+    border:1px solid #e3ebf2;
+    margin-bottom:20px;
+}
+
+.form-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:15px;
+}
+
+.field label{
+    display:block;
+    font-size:13px;
+    font-weight:bold;
+    margin-bottom:5px;
+}
+
+select,
+textarea{
+    width:100%;
+    padding:13px;
+    border:1px solid #d9e2ec;
+    border-radius:11px;
+    background:white;
+    font-size:14px;
+}
+
+textarea{
+    min-height:110px;
+    resize:vertical;
+}
+
+.full{
+    grid-column:1/-1;
+}
+
+.generate-btn{
+    background:#10a879;
+    color:white;
+    padding:13px 18px;
+    border-radius:11px;
+    font-weight:bold;
+}
+
+.save-btn{
+    background:#0879d1;
+    color:white;
+    padding:13px 18px;
+    border-radius:11px;
+    font-weight:bold;
+}
+
+/* CLASSES */
+
+.class-item{
+    background:white;
+    border:1px solid #e1e8ef;
+    border-radius:17px;
+    padding:18px;
+    margin-bottom:12px;
+}
+
+.class-header{
+    display:flex;
+    justify-content:space-between;
+    gap:10px;
+}
+
+.class-header h3{
+    margin-bottom:5px;
+}
+
+.class-info{
+    color:#718096;
+    font-size:13px;
+}
+
+.class-actions{
+    display:flex;
+    gap:8px;
+    margin-top:14px;
+}
+
+.view-btn{
+    background:#eaf4fb;
+    color:#0879d1;
+    padding:9px 13px;
+    border-radius:9px;
+}
+
+.delete-btn{
+    background:#fff0f0;
+    color:#d33;
+    padding:9px 13px;
+    border-radius:9px;
+}
+
+/* FULL SCREEN CLASS */
+
+.modal{
+    position:fixed;
+    inset:0;
+    background:rgba(5,20,40,.85);
+    z-index:100;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:20px;
+}
+
+.modal-content{
+    background:white;
+    width:100%;
+    max-width:1000px;
+    max-height:92vh;
+    overflow:auto;
+    border-radius:22px;
+    padding:30px;
+}
+
+.modal-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:25px;
+}
+
+.close-btn{
+    background:#edf3f8;
+    border-radius:10px;
+    padding:10px 14px;
+    font-size:18px;
+}
+
+.lesson-section{
+    margin-bottom:22px;
+}
+
+.lesson-section h3{
+    color:#0879d1;
+    margin-bottom:8px;
+}
+
+.lesson-section p{
+    line-height:1.6;
+    color:#334155;
+}
+
+.lesson-box{
+    background:#f4f8fb;
+    padding:15px;
+    border-radius:12px;
+    margin-top:8px;
+}
+
+/* MOBILE */
+
+@media(max-width:800px){
+
+    .sidebar{
+        display:none;
+    }
+
+    .main{
+        padding:15px;
+    }
+
+    .topbar{
+        padding:0 12px;
+    }
+
+    .user-email{
+        display:none;
+    }
+
+    .stats{
+        grid-template-columns:1fr;
+    }
+
+    .form-grid{
+        grid-template-columns:1fr;
+    }
+
+    .full{
+        grid-column:auto;
+    }
+
+    .welcome h2{
+        font-size:23px;
+    }
+}
+
 </style>
 </head>
+
 <body>
-<div class="app"><aside class="side">
-<div class="logo"><div class="logoIcon">🏃</div><div><b>EduFísica</b><small>Chile PRO</small></div></div>
-<div class="nav">
-<button class="active" onclick="go('inicio',this)">🏠 <span>Inicio</span></button>
-<button onclick="go('cursos',this)">🎓 <span>Cursos</span></button>
-<button onclick="go('oa',this)">🎯 <span>Currículum</span></button>
-<button onclick="go('crear',this)">✨ <span>Crear clase</span></button>
-<button onclick="go('planner',this)">📅 <span>Planner</span></button>
-<button onclick="go('rubrica',this)">📊 <span>Evaluación</span></button>
-<button onclick="go('guardadas',this)">💾 <span>Mis clases</span></button>
-</div><div class="sideFoot">🇨🇱 Currículum Nacional MINEDUC<br><b>OA → clase → evaluación → planner</b></div>
-</aside><div class="main">
-<header class="top"><div class="topbar"><div class="crumb" id="crumb">Inicio / Dashboard</div><div class="topActions"><button class="btn secondary" onclick="go('oa')">🔎 Buscar OA</button><button class="btn primary" onclick="go('crear')">＋ Nueva clase</button></div></div></header>
-<main class="content">
-<section id="inicio" class="page active"><div class="hero"><h1>EduFísica Chile PRO 🚀</h1><p>Plataforma docente moderna para planificar Educación Física desde 1° básico hasta 4° medio, conectando currículum, clase, evaluación y calendario.</p><br><button class="btn primary" onclick="go('crear')">✨ Crear una clase de calidad</button></div>
-<div class="stats"><div class="stat">🎓<b>1°–4°</b><span>Niveles</span></div><div class="stat">🎯<b id="oaCount">0</b><span>OA cargados</span></div><div class="stat">⏱<b>90 min</b><span>Bloque principal</span></div><div class="stat">💾<b id="savedCount">0</b><span>Clases guardadas</span></div></div>
-<div class="grid4"><div class="card" onclick="go('crear')"><div class="icon">🤖</div><h3>Crear mi clase</h3><p>Genera inicio, desarrollo, cierre, inclusión, seguridad e indicadores.</p></div><div class="card" onclick="go('oa')"><div class="icon">🎯</div><h3>Currículum</h3><p>Explora OA por nivel, eje y código.</p></div><div class="card" onclick="go('planner')"><div class="icon">📅</div><h3>Planner</h3><p>Fecha exacta, bloques y clases conectadas.</p></div><div class="card" onclick="go('rubrica')"><div class="icon">📊</div><h3>Evaluación</h3><p>Rúbricas de 4 niveles alineadas al OA.</p></div></div></section>
 
-<section id="cursos" class="page"><div class="hero"><h1>🎓 Mis niveles</h1><p>Selecciona un nivel para explorar sus objetivos.</p></div><div class="courseGrid" id="courseGrid"></div></section>
+<!-- LOGIN -->
 
-<section id="oa" class="page"><div class="hero"><h1>🎯 Currículum de Educación Física</h1><p>Biblioteca de objetivos organizada por nivel y eje. Haz clic en cualquier OA para llevarlo al constructor.</p></div>
-<div class="toolbar"><select id="oaLevel" onchange="renderOA()"></select><select id="oaAxis" onchange="renderOA()"></select><input class="input" id="oaSearch" placeholder="Buscar código o palabra..." oninput="renderOA()"></div><div class="oaList" id="oaList"></div></section>
+<div id="loginScreen" class="login-screen">
 
-<section id="crear" class="page"><div class="hero"><h1>✨ Constructor de clases</h1><p>Elige curso + OA + contenido y genera una clase de 90 minutos con estructura pedagógica.</p></div>
-<div class="form"><div class="fields"><div><label>Curso</label><select id="cCurso" onchange="syncOA()"></select></div><div><label>Duración</label><select id="cDur"><option>90 minutos</option><option>60 minutos</option></select></div><div><label>Contenido / deporte</label><select id="cContenido"><option>Habilidades motrices</option><option>Fútbol</option><option>Básquetbol</option><option>Vóleibol</option><option>Handbol</option><option>Atletismo</option><option>Gimnasia</option><option>Folclore y danzas</option><option>Condición física</option><option>Juegos predeportivos</option><option>Coordinación y agilidad</option></select></div><div><label>OA</label><select id="cOA"></select></div><div><label>Nivel taxonómico</label><select id="cBloom" onchange="updateObjectivePreview()"><option>Recordar</option><option>Comprender</option><option>Aplicar</option><option>Analizar</option><option>Evaluar</option><option>Crear</option></select><div class="helper">Se propone automáticamente según el verbo del OA; puedes ajustarlo.</div></div><div><label>Enfoque</label><select id="cEnfoque"><option>Desarrollo motriz</option><option>Iniciación deportiva</option><option>Vida activa y saludable</option><option>Cooperación y juego limpio</option><option>Condición física</option><option>Expresión corporal</option></select></div><div class="full"><label>Necesidad específica</label><textarea id="cNeed" placeholder="Ej.: mejorar pase, aumentar participación, adaptar tareas, trabajar lateralidad..."></textarea></div>
-<div><label>📅 Fecha de la clase</label><input class="input" type="date" id="cFecha"><div class="helper">La fecha se guardará directamente en el Planner.</div></div>
-<div><label>⏰ Bloque horario</label><select id="cHora"><option>08:30</option><option>10:00</option><option>11:30</option><option>13:00</option><option>14:30</option><option>16:00</option></select><div class="helper">Bloques coordinados con el horario del Planner.</div></div>
-<div class="full objectivePreview" id="objectivePreview"></div>
-</div><br><button class="btn primary" onclick="generateClass()">🚀 Generar clase completa</button><div id="classResult"></div></div></section>
+    <div class="login-box">
 
-<section id="planner" class="page"><div class="hero"><h1>📅 Planner docente</h1><p>Horario semanal con fechas reales y bloques conectados a las clases guardadas. Haz clic en <b>＋</b> para crear una clase directamente en esa fecha y hora.</p></div><div class="planner"><div class="plannerHead"><button class="btn secondary" onclick="changeWeek(-1)">←</button><b id="weekLabel"></b><div><button class="btn orange" onclick="changeWeek(0)">📍 Hoy</button><button class="btn secondary" onclick="changeWeek(1)">→</button></div></div><div class="weekGrid" id="weekGrid"></div></div></section>
+        <div class="logo">
 
-<section id="rubrica" class="page"><div class="hero"><h1>📊 Evaluación inteligente</h1><p>Genera una rúbrica de cuatro niveles vinculada al OA.</p></div><div class="form"><div class="fields"><div><label>Curso</label><select id="rCurso" onchange="syncRubric()"></select></div><div><label>Actividad</label><input class="input" id="rAct" placeholder="Ej.: circuito de pase y recepción"></div><div class="full"><label>OA relacionado</label><select id="rOA"></select></div></div><br><button class="btn primary" onclick="makeRubric()">📊 Generar rúbrica</button><div id="rubricResult"></div></div></section>
+            <div class="logo-icon">EF</div>
 
-<section id="guardadas" class="page"><div class="hero"><h1>💾 Mis clases</h1><p>Biblioteca de planificaciones conectadas al Planner.</p></div><div id="savedList"></div></section>
-</main></div></div>
-<div class="modal" id="modal"><div class="modalBox"><div class="modalTop"><b id="modalTitle">Clase</b><button class="btn secondary" onclick="closeModal()">✕</button></div><div id="modalBody" style="padding:20px"></div></div></div><div class="toast" id="toast"></div>
-<script>
-const CURRICULUM={"1° Básico": [["EF01 OA 01", "Habilidades motrices", "Demostrar habilidades motrices básicas de locomoción, manipulación y estabilidad en una variedad de juegos y actividades físicas."], ["EF01 OA 02", "Habilidades motrices", "Ejecutar acciones motrices con relación a sí mismo, a un objeto o un compañero, usando diferentes categorías de ubicación espacial y temporal."], ["EF01 OA 03", "Habilidades motrices", "Practicar una amplia gama de juegos con y sin oposición, con y sin colaboración, de persecución, individuales y colectivos."], ["EF01 OA 04", "Habilidades motrices", "Ejecutar habilidades motrices básicas en diferentes entornos, como plazas activas, patio del colegio, parques y playas."], ["EF01 OA 05", "Habilidades motrices", "Ejecutar movimientos corporales, expresando sensaciones, ideas, estados de ánimo y emociones en variados espacios y a diferentes ritmos."], ["EF01 OA 06", "Vida activa y saludable", "Ejecutar actividades físicas de intensidad moderada a vigorosa que incrementen la condición física, por medio de juegos y circuitos."], ["EF01 OA 07", "Vida activa y saludable", "Practicar en su vida cotidiana actividades físicas de intensidad moderada a vigorosa de forma guiada, por medio de juegos tradicionales y actividades lúdicas."], ["EF01 OA 08", "Vida activa y saludable", "Reconocer las sensaciones y respuestas corporales provocadas por la práctica de actividad física."], ["EF01 OA 09", "Vida activa y saludable", "Practicar actividades físicas en forma segura, demostrando hábitos de higiene, posturales y de vida saludable."], ["EF01 OA 10", "Seguridad, juego limpio y liderazgo", "Practicar juegos o actividades motrices para aprender a trabajar en equipo, asumiendo diferentes roles."], ["EF01 OA 11", "Seguridad, juego limpio y liderazgo", "Practicar actividades físicas, demostrando comportamientos seguros como realizar un calentamiento mediante un juego; escuchar y seguir instrucciones; utilizar implementos bajo supervisión."]], "2° Básico": [["EF02 OA 01", "Habilidades motrices", "Demostrar habilidades motrices básicas de locomoción, manipulación y estabilidad en diferentes direcciones, alturas y niveles."], ["EF02 OA 02", "Habilidades motrices", "Ejecutar acciones motrices que presenten una solución a un problema, por ejemplo, agrupaciones y representaciones de símbolos, letras, números o figuras geométricas."], ["EF02 OA 03", "Habilidades motrices", "Practicar una amplia gama de juegos con y sin oposición, con y sin colaboración, de persecución, individuales y colectivos."], ["EF02 OA 04", "Habilidades motrices", "Ejecutar habilidades motrices básicas en diferentes entornos, utilizando referencias como rutas, mapas y símbolos guiados por el profesor."], ["EF02 OA 05", "Habilidades motrices", "Ejecutar movimientos corporales, expresando sensaciones, ideas, estados de ánimo y emociones en variados espacios y a diferentes ritmos e intensidades."], ["EF02 OA 06", "Vida activa y saludable", "Ejecutar actividades físicas de intensidad moderada a vigorosa que incrementen la condición física por medio de juegos y circuitos."], ["EF02 OA 07", "Vida activa y saludable", "Ejecutar e incorporar a su vida cotidiana juegos y actividades físicas de intensidad moderada a vigorosa cinco veces por semana."], ["EF02 OA 08", "Vida activa y saludable", "Describir las sensaciones y respuestas corporales provocadas por la práctica de actividad física."], ["EF02 OA 09", "Vida activa y saludable", "Practicar actividades físicas en forma segura, demostrando hábitos de higiene, posturales y de vida saludable."], ["EF02 OA 10", "Seguridad, juego limpio y liderazgo", "Practicar juegos o actividades motrices para aprender a trabajar en equipo, asumiendo diferentes roles."], ["EF02 OA 11", "Seguridad, juego limpio y liderazgo", "Practicar actividades físicas, demostrando comportamientos seguros, como realizar un calentamiento mediante un juego; escuchar y seguir instrucciones; utilizar implementos bajo supervisión."]], "3° Básico": [["EF03 OA 01", "Habilidades motrices", "Demostrar capacidad para ejecutar de forma combinada las habilidades motrices básicas de locomoción, manipulación y estabilidad en diferentes direcciones, alturas y niveles."], ["EF03 OA 02", "Habilidades motrices", "Ejecutar acciones motrices que presenten una solución a un problema, reconociendo criterios de tiempo, espacio y número de personas."], ["EF03 OA 03", "Habilidades motrices", "Practicar juegos pre-deportivos con reglas y espacios adaptados, aplicando principios generales de juego."], ["EF03 OA 04", "Habilidades motrices", "Ejecutar actividades físicas y/o lúdicas en diferentes entornos, aplicando medidas para conservar limpios y ordenados los espacios."], ["EF03 OA 05", "Habilidades motrices", "Ejecutar movimientos o elementos de danzas tradicionales de forma coordinada, utilizando actividades rítmicas y lúdicas."], ["EF03 OA 06", "Vida activa y saludable", "Ejecutar actividades físicas de intensidad moderada a vigorosa que desarrollen resistencia cardiovascular, fuerza, flexibilidad y velocidad, mejorando resultados personales."], ["EF03 OA 07", "Vida activa y saludable", "Practicar de manera regular y autónoma actividades físicas de intensidad moderada a vigorosa."], ["EF03 OA 08", "Vida activa y saludable", "Describir y registrar las respuestas corporales provocadas por la práctica de actividad física, como aumento de la frecuencia cardiaca y respiratoria."], ["EF03 OA 09", "Vida activa y saludable", "Practicar actividades físicas en forma segura, demostrando hábitos de higiene, posturales y de vida saludable."], ["EF03 OA 10", "Seguridad, juego limpio y liderazgo", "Practicar actividades físicas y/o juegos colectivos con responsabilidad y honestidad, cumpliendo reglas, roles y principios de juego limpio."], ["EF03 OA 11", "Seguridad, juego limpio y liderazgo", "Practicar actividades físicas, demostrando comportamientos seguros, como realizar calentamiento apropiado, escuchar instrucciones y mantener el espacio seguro."]], "4° Básico": [["EF04 OA 01", "Habilidades motrices", "Demostrar control en la ejecución de habilidades motrices básicas de locomoción, manipulación y estabilidad en diferentes direcciones, alturas y niveles."], ["EF04 OA 02", "Habilidades motrices", "Ejecutar movimientos o elementos de danzas tradicionales de forma coordinada, utilizando actividades rítmicas y lúdicas."], ["EF04 OA 03", "Habilidades motrices", "Practicar juegos pre-deportivos con reglas y espacios adaptados, aplicando principios generales de juego."], ["EF04 OA 04", "Habilidades motrices", "Ejecutar actividades físicas y/o lúdicas en diferentes entornos, aplicando medidas para conservar limpios y ordenados los espacios."], ["EF04 OA 05", "Habilidades motrices", "Ejecutar movimientos o elementos de danzas tradicionales de forma coordinada."], ["EF04 OA 06", "Vida activa y saludable", "Ejecutar actividades físicas de intensidad moderada a vigorosa que desarrollen resistencia cardiovascular, fuerza, flexibilidad y velocidad, mejorando resultados personales."], ["EF04 OA 07", "Vida activa y saludable", "Practicar de manera regular y autónoma actividades físicas de intensidad moderada a vigorosa."], ["EF04 OA 08", "Vida activa y saludable", "Medir y registrar las respuestas corporales provocadas por la actividad física mediante el pulso o escalas de percepción de esfuerzo."], ["EF04 OA 09", "Vida activa y saludable", "Practicar actividades físicas en forma segura, demostrando hábitos de higiene, posturales y de vida saludable."], ["EF04 OA 10", "Seguridad, juego limpio y liderazgo", "Practicar actividades físicas y/o juegos colectivos con responsabilidad y honestidad, cumpliendo reglas y roles, respetando decisiones y organizando equitativamente los equipos."], ["EF04 OA 11", "Seguridad, juego limpio y liderazgo", "Practicar actividades físicas, demostrando comportamientos seguros, como realizar un calentamiento apropiado y utilizar adecuadamente materiales e instalaciones."]], "5° Básico": [["EF05 OA 01", "Habilidades motrices", "Demostrar la aplicación de las habilidades motrices básicas adquiridas, en una variedad de actividades deportivas."], ["EF05 OA 02", "Habilidades motrices", "Ejecutar juegos colectivos y deportes, creando tácticas y estrategias y resolviendo problemas en relación con espacio, objeto y adversarios."], ["EF05 OA 03", "Habilidades motrices", "Practicar deportes individuales y colectivos con reglas y espacios adaptados, aplicando estrategias defensivas y ofensivas."], ["EF05 OA 04", "Habilidades motrices", "Ejecutar actividades físicas y/o deportivas utilizando diferentes entornos y medidas para conservar limpios y ordenados los espacios."], ["EF05 OA 05", "Habilidades motrices", "Demostrar la correcta ejecución de una danza nacional, utilizando pasos básicos y música folclórica."], ["EF05 OA 06", "Vida activa y saludable", "Ejecutar actividades físicas de intensidad moderada a vigorosa para desarrollar resistencia cardiovascular, fuerza, flexibilidad y velocidad, estableciendo metas de superación personal."], ["EF05 OA 07", "Vida activa y saludable", "Practicar y planificar regularmente actividades físicas y/o deportivas de intensidad moderada a vigorosa."], ["EF05 OA 08", "Vida activa y saludable", "Determinar la intensidad del esfuerzo físico mediante el pulso o escalas de percepción de esfuerzo."], ["EF05 OA 09", "Vida activa y saludable", "Practicar actividades físicas en forma segura, demostrando hábitos de higiene, posturales y de vida saludable."], ["EF05 OA 10", "Seguridad, juego limpio y liderazgo", "Practicar actividades físicas y/o juegos colectivos, demostrando responsabilidad, liderazgo y respeto al participar."], ["EF05 OA 11", "Seguridad, juego limpio y liderazgo", "Practicar actividades físicas y/o deportivas, demostrando comportamientos seguros y manejo adecuado de materiales y procedimientos."]], "6° Básico": [["EF06 OA 01", "Habilidades motrices", "Demostrar la aplicación de las habilidades motrices básicas adquiridas en una variedad de actividades deportivas, superando pequeños obstáculos."], ["EF06 OA 02", "Habilidades motrices", "Ejecutar juegos colectivos y deportes que requieran tomar decisiones y evaluar las estrategias utilizadas para perfeccionar su juego."], ["EF06 OA 03", "Habilidades motrices", "Practicar deportes individuales y colectivos que apliquen reglas y estrategias específicas del juego."], ["EF06 OA 04", "Habilidades motrices", "Planificar y ejecutar actividades físicas y deportivas utilizando diversos entornos y medidas para conservar limpios y ordenados los espacios."], ["EF06 OA 05", "Habilidades motrices", "Demostrar la correcta ejecución de una danza nacional, utilizando pasos básicos y música folclórica."], ["EF06 OA 06", "Vida activa y saludable", "Ejecutar actividades físicas de intensidad moderada a vigorosa que desarrollen resistencia cardiovascular, fuerza, flexibilidad y velocidad, estableciendo metas de superación personal."], ["EF06 OA 07", "Vida activa y saludable", "Practicar y planificar regularmente actividades físicas y/o deportivas de intensidad moderada a vigorosa."], ["EF06 OA 08", "Vida activa y saludable", "Determinar la intensidad del esfuerzo físico mediante el pulso o escalas de percepción de esfuerzo."], ["EF06 OA 09", "Vida activa y saludable", "Practicar actividades físicas en forma segura, demostrando hábitos de higiene, posturales y de vida saludable."], ["EF06 OA 10", "Seguridad, juego limpio y liderazgo", "Practicar actividades físicas y/o juegos colectivos, demostrando responsabilidad, liderazgo y respeto al participar."], ["EF06 OA 11", "Seguridad, juego limpio y liderazgo", "Practicar actividades físicas y/o deportivas, demostrando comportamientos seguros y manejo adecuado de materiales y procedimientos."]], "7° Básico": [["EF07 OA 01", "Habilidades motrices", "Aplicar, combinar y ajustar habilidades motrices específicas de locomoción, manipulación y estabilidad en deportes individuales, oposición, colaboración, oposición/colaboración y una danza."], ["EF07 OA 02", "Habilidades motrices", "Seleccionar y aplicar estrategias y tácticas específicas para la resolución de problemas durante la práctica de juegos o deportes."], ["EF07 OA 03", "Vida activa y saludable", "Desarrollar resistencia cardiovascular, fuerza muscular, velocidad y flexibilidad para alcanzar una condición física saludable, considerando frecuencia, intensidad, tiempo y tipo de ejercicio."], ["EF07 OA 04", "Vida activa y saludable", "Practicar regularmente variedad de actividades físicas alternativas y/o deportivas en diferentes entornos, aplicando conductas de autocuidado y seguridad."], ["EF07 OA 05", "Responsabilidad personal y social", "Participar en variedad de actividades físicas y/o deportivas de su interés que se desarrollen en su comunidad escolar y/o entorno."]], "8° Básico": [["EF08 OA 01", "Habilidades motrices", "Seleccionar, combinar y aplicar con mayor dominio habilidades motrices específicas en deportes individuales, oposición, colaboración, oposición/colaboración y una danza."], ["EF08 OA 02", "Habilidades motrices", "Seleccionar y aplicar estrategias y tácticas específicas para la resolución de problemas durante la práctica de juegos o deportes."], ["EF08 OA 03", "Vida activa y saludable", "Desarrollar resistencia cardiovascular, fuerza muscular, velocidad y flexibilidad para alcanzar una condición física saludable."], ["EF08 OA 04", "Vida activa y saludable", "Practicar regularmente variedad de actividades físicas alternativas y/o deportivas en diferentes entornos, aplicando autocuidado y seguridad."], ["EF08 OA 05", "Responsabilidad personal y social", "Participar en variedad de actividades físicas y/o deportivas de su interés que se desarrollen en su comunidad escolar y/o entorno."]], "1° Medio": [["EF1M OA 01", "Habilidades motrices", "Perfeccionar y aplicar controladamente habilidades motrices específicas de locomoción, manipulación y estabilidad en un deporte individual, oposición, colaboración, oposición/colaboración y una danza."], ["EF1M OA 02", "Habilidades motrices", "Modificar, evaluar y aplicar estrategias y tácticas específicas utilizadas para resolver problemas durante la práctica de juegos o deportes."], ["EF1M OA 03", "Vida activa y saludable", "Diseñar y aplicar un plan de entrenamiento personal para alcanzar una condición física saludable, desarrollando resistencia cardiovascular, fuerza muscular, velocidad y flexibilidad."], ["EF1M OA 04", "Vida activa y saludable", "Practicar regularmente variedad de actividades físicas alternativas y/o deportivas en diferentes entornos, aplicando autocuidado, seguridad y primeros auxilios."], ["EF1M OA 05", "Responsabilidad personal y social", "Participar y promover variedad de actividades físicas y/o deportivas de interés que se desarrollen en su comunidad escolar y/o entorno."]], "2° Medio": [["EF2M OA 01", "Habilidades motrices", "Perfeccionar y aplicar con precisión habilidades motrices específicas en un deporte individual, oposición, colaboración, oposición/colaboración y una danza."], ["EF2M OA 02", "Habilidades motrices", "Diseñar, aplicar y evaluar estrategias y tácticas específicas utilizadas para resolver problemas durante la práctica de juegos o deportes."], ["EF2M OA 03", "Vida activa y saludable", "Diseñar, evaluar y aplicar un plan de entrenamiento personal para alcanzar una condición física saludable, desarrollando resistencia cardiovascular, fuerza muscular, velocidad y flexibilidad."], ["EF2M OA 04", "Vida activa y saludable", "Practicar regularmente variedad de actividades físicas alternativas y/o deportivas en diferentes entornos, aplicando autocuidado, seguridad y primeros auxilios."], ["EF2M OA 05", "Responsabilidad personal y social", "Participar, liderar y promover variedad de actividades físicas y/o deportivas de interés en su comunidad escolar y/o entorno."]], "3° y 4° Medio": [["FG-EFS1-3y4-OAC-01", "Educación Física y Salud 1", "Aplicar individual y colectivamente habilidades motrices especializadas de manera creativa y segura, en variedad de actividades físicas de interés y diferentes entornos."], ["FG-EFS1-3y4-OAC-02", "Educación Física y Salud 1", "Evaluar el impacto de estrategias y tácticas individuales y colectivas utilizadas para resolver problemas en juego, deporte y recreación, asumiendo distintos roles y tareas."], ["FG-EFS1-3y4-OAC-03", "Educación Física y Salud 1", "Diseñar y aplicar un plan de entrenamiento para mejorar el rendimiento físico, considerando características personales y funcionales."], ["FG-EFS1-3y4-OAC-04", "Educación Física y Salud 1", "Promover bienestar, autocuidado, vida activa y alimentación saludable en la comunidad mediante programas y proyectos deportivos, recreativos y socioculturales."], ["FG-EFS1-3y4-OAC-05", "Educación Física y Salud 1", "Analizar cómo factores sociales, culturales, económicos y tecnológicos favorecen oportunidades para adquirir un estilo de vida activo y saludable a nivel local, regional y global."], ["EF-CEFD-3y4-OAC-01", "Ciencias del ejercicio físico y deportivo", "Practicar una variedad de actividades físico-deportivas de interés, respetando necesidades e individualidades."], ["EF-CEFD-3y4-OAC-02", "Ciencias del ejercicio físico y deportivo", "Evaluar las adaptaciones agudas y crónicas que provoca el ejercicio físico para comprender su impacto en el rendimiento físico y deportivo."], ["EF-CEFD-3y4-OAC-03", "Ciencias del ejercicio físico y deportivo", "Implementar y evaluar programas de entrenamiento físico para mejorar la condición física propia y de otros."], ["EF-CEFD-3y4-OAC-04", "Ciencias del ejercicio físico y deportivo", "Analizar los efectos de la actividad física, alimentación saludable y ayudas ergogénicas en el rendimiento físico y deportivo."], ["EF-CEFD-3y4-OAC-05", "Ciencias del ejercicio físico y deportivo", "Diseñar y aplicar diferentes sistemas de entrenamiento para mejorar el rendimiento físico y deportivo."], ["EF-EXCO-3y4-OAC-01", "Expresión corporal", "Manifestar la expresión de la corporalidad propia y de otros desde el conocimiento de posibilidades físicas, motrices y expresivas."], ["EF-EXCO-3y4-OAC-02", "Expresión corporal", "Descubrir un lenguaje corporal propio a través del movimiento, utilizando improvisación y creación."], ["EF-PVAS-3y4-OAC-01", "Promoción de estilos de vida activos y saludables", "Practicar variedad de actividades físicas de intensidad moderada a vigorosa de interés para adquirir un estilo de vida activo saludable."], ["EF-PVAS-3y4-OAC-02", "Promoción de estilos de vida activos y saludables", "Valorar los beneficios del ejercicio físico en la salud para promover un estilo de vida activo saludable."], ["EF-PVAS-3y4-OAC-03", "Promoción de estilos de vida activos y saludables", "Implementar programas de entrenamiento para mejorar la condición física asociada a la salud."]]},levels=Object.keys(CURRICULUM);let selectedOA=null,weekOffset=0;
-const $=id=>document.getElementById(id);
-const allOA=()=>levels.flatMap(l=>CURRICULUM[l].map(x=>({level:l,code:x[0],axis:x[1],text:x[2]})));
-function go(id,btn){document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));$(id).classList.add('active');document.querySelectorAll('.nav button').forEach(b=>b.classList.remove('active'));if(btn)btn.classList.add('active');if(id==='oa')renderOA();if(id==='planner')renderPlanner();if(id==='guardadas')renderSaved();window.scrollTo(0,0)}
-function toast(t){let e=$('toast');e.textContent=t;e.classList.add('show');setTimeout(()=>e.classList.remove('show'),2200)}
-function init(){ $('courseGrid').innerHTML=levels.map((l,i)=>`<div class="course" onclick="openLevel('${l}')"><div style="font-size:28px">${['🟢','🔵','🟣','🟠'][i%4]}</div><h2>${l}</h2><b>${CURRICULUM[l].length} OA</b></div>`).join('');['cCurso','rCurso','oaLevel'].forEach(id=>$(id).innerHTML=levels.map(l=>`<option>${l}</option>`).join(''));$('oaLevel').insertAdjacentHTML('afterbegin','<option value="">Todos</option>');$('oaAxis').innerHTML='<option value="">Todos los ejes</option>'+[...new Set(allOA().map(o=>o.axis))].map(a=>`<option>${a}</option>`).join('');syncOA();syncRubric();renderOA();renderPlanner();updateCounts()}
-function openLevel(l){go('oa');$('oaLevel').value=l;renderOA()}
-function renderOA(){let l=$('oaLevel').value,a=$('oaAxis').value,q=$('oaSearch').value.toLowerCase(),arr=allOA().filter(o=>(!l||o.level===l)&&(!a||o.axis===a)&&(!q||(o.code+' '+o.text+' '+o.axis).toLowerCase().includes(q)));$('oaList').innerHTML=arr.map(o=>`<article class="oaCard" onclick="selectOA('${o.code}')"><div class="oaTop"><span class="code">${o.code}</span><span class="axis">${o.axis}</span></div><h3>${o.level}</h3><p>${o.text}</p><div style="margin-top:9px;color:#155eef;font-weight:900;font-size:11px">🧠 Nivel sugerido: ${suggestedBloom(o.text)} · Usar en mi clase →</div></article>`).join('')}
-function selectOA(code){selectedOA=allOA().find(o=>o.code===code);go('crear');$('cCurso').value=selectedOA.level;syncOA();$('cOA').value=code;toast('🎯 '+code+' conectado')}
-function syncOA(){let l=$('cCurso').value;let arr=CURRICULUM[l]||[];$('cOA').innerHTML=arr.map(o=>`<option value="${o[0]}">${o[0]} · ${o[2].slice(0,80)}</option>`).join('');if(selectedOA&&selectedOA.level===l)$('cOA').value=selectedOA.code;let o=currentOA();if(o){$('cBloom').value=suggestedBloom(o.text)}syncRubric();updateObjectivePreview()}
-function syncRubric(){let l=$('rCurso').value||levels[0];$('rOA').innerHTML=(CURRICULUM[l]||[]).map(o=>`<option value="${o[0]}">${o[0]}</option>`).join('')}
-function updateCounts(){$('oaCount').textContent=allOA().length;$('savedCount').textContent=JSON.parse(localStorage.getItem('efpro_classes')||'[]').length}
+            <h1>EduFísica Chile</h1>
 
-const BLOOM_ORDER=['Recordar','Comprender','Aplicar','Analizar','Evaluar','Crear'];
-const BLOOM_MAP={
- 'Demostrar':'Aplicar','Ejecutar':'Aplicar','Practicar':'Aplicar','Realizar':'Aplicar',
- 'Describir':'Comprender','Reconocer':'Comprender','Explicar':'Comprender','Identificar':'Recordar',
- 'Determinar':'Analizar','Comparar':'Analizar','Analizar':'Analizar','Evaluar':'Evaluar',
- 'Diseñar':'Crear','Crear':'Crear','Planificar':'Crear','Promover':'Crear','Implementar':'Aplicar',
- 'Seleccionar':'Analizar','Modificar':'Crear','Perfeccionar':'Aplicar','Aplicar':'Aplicar',
- 'Valorar':'Evaluar','Descubrir':'Crear','Manifestar':'Aplicar'
+            <p>Plataforma docente de Educación Física</p>
+
+        </div>
+
+        <label>Correo electrónico</label>
+        <input id="email" class="input" type="email"
+               placeholder="profesor@email.com">
+
+        <label>Contraseña</label>
+        <input id="password" class="input" type="password"
+               placeholder="Mínimo 6 caracteres">
+
+        <button class="btn" onclick="login()">
+            Iniciar sesión
+        </button>
+
+        <button class="btn btn-secondary" onclick="register()">
+            Crear cuenta
+        </button>
+
+        <div id="loginMessage" class="login-message"></div>
+
+    </div>
+
+</div>
+
+
+<!-- APP -->
+
+<div id="app" class="app hidden">
+
+    <header class="topbar">
+
+        <div class="brand">
+
+            <div class="brand-icon">EF</div>
+
+            <span>EduFísica Chile</span>
+
+        </div>
+
+        <div class="user-area">
+
+            <span id="userEmail" class="user-email"></span>
+
+            <button class="logout" onclick="logout()">
+                Salir
+            </button>
+
+        </div>
+
+    </header>
+
+
+    <div class="layout">
+
+        <aside class="sidebar">
+
+            <div class="menu-title">Principal</div>
+
+            <button class="menu-btn active"
+                    onclick="showSection('inicio',this)">
+                🏠 Inicio
+            </button>
+
+            <button class="menu-btn"
+                    onclick="showSection('crear',this)">
+                ➕ Crear mi clase
+            </button>
+
+            <button class="menu-btn"
+                    onclick="showSection('clases',this)">
+                📚 Mis clases
+            </button>
+
+            <div class="menu-title">Planificación</div>
+
+            <button class="menu-btn"
+                    onclick="showSection('objetivos',this)">
+                🎯 Objetivos
+            </button>
+
+            <button class="menu-btn"
+                    onclick="showSection('evaluacion',this)">
+                📊 Evaluación
+            </button>
+
+        </aside>
+
+
+        <main class="main">
+
+
+            <!-- INICIO -->
+
+            <section id="inicio">
+
+                <div class="welcome">
+
+                    <h2>¡Bienvenido a EduFísica Chile! 👋</h2>
+
+                    <p>
+                        Crea, organiza y guarda tus clases de Educación Física.
+                    </p>
+
+                </div>
+
+
+                <div class="stats">
+
+                    <div class="stat">
+
+                        <div id="totalClasses"
+                             class="stat-number">
+                            0
+                        </div>
+
+                        <div class="stat-label">
+                            Clases guardadas
+                        </div>
+
+                    </div>
+
+                    <div class="stat">
+
+                        <div class="stat-number">
+                            1° - 8°
+                        </div>
+
+                        <div class="stat-label">
+                            Educación Básica
+                        </div>
+
+                    </div>
+
+                    <div class="stat">
+
+                        <div class="stat-number">
+                            🇨🇱
+                        </div>
+
+                        <div class="stat-label">
+                            Currículum chileno
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <h2 class="section-title">
+                    Acciones rápidas
+                </h2>
+
+
+                <div class="cards">
+
+                    <div class="card"
+                         onclick="showSection('crear')">
+
+                        <div class="card-icon">➕</div>
+
+                        <h3>Crear mi clase</h3>
+
+                        <p>
+                            Genera una clase completa de Educación Física.
+                        </p>
+
+                    </div>
+
+
+                    <div class="card"
+                         onclick="showSection('clases')">
+
+                        <div class="card-icon">📚</div>
+
+                        <h3>Mis clases</h3>
+
+                        <p>
+                            Revisa y administra tus clases guardadas.
+                        </p>
+
+                    </div>
+
+
+                    <div class="card"
+                         onclick="showSection('objetivos')">
+
+                        <div class="card-icon">🎯</div>
+
+                        <h3>Objetivos</h3>
+
+                        <p>
+                            Genera objetivos utilizando verbos de Bloom.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- CREAR CLASE -->
+
+            <section id="crear" class="hidden">
+
+                <h2 class="section-title">
+                    ➕ Crear mi clase
+                </h2>
+
+
+                <div class="panel">
+
+                    <div class="form-grid">
+
+                        <div class="field">
+
+                            <label>Curso</label>
+
+                            <select id="curso">
+
+                                <option value="1° Básico">
+                                    1° Básico
+                                </option>
+
+                                <option value="2° Básico">
+                                    2° Básico
+                                </option>
+
+                                <option value="3° Básico">
+                                    3° Básico
+                                </option>
+
+                                <option value="4° Básico">
+                                    4° Básico
+                                </option>
+
+                                <option value="5° Básico">
+                                    5° Básico
+                                </option>
+
+                                <option value="6° Básico">
+                                    6° Básico
+                                </option>
+
+                                <option value="7° Básico">
+                                    7° Básico
+                                </option>
+
+                                <option value="8° Básico">
+                                    8° Básico
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+                        <div class="field">
+
+                            <label>Duración</label>
+
+                            <select id="duracion">
+
+                                <option>45 minutos</option>
+                                <option>60 minutos</option>
+                                <option>90 minutos</option>
+
+                            </select>
+
+                        </div>
+
+
+                        <div class="field full">
+
+                            <label>
+                                Contenido / Unidad
+                            </label>
+
+                            <input
+                                id="contenido"
+                                class="input"
+                                placeholder="Ej: Fútbol, resistencia, básquetbol, habilidades motrices..."
+                            >
+
+                        </div>
+
+
+                        <div class="field full">
+
+                            <label>
+                                Objetivo de la clase
+                            </label>
+
+                            <textarea
+                                id="objetivo"
+                                placeholder="Escribe el objetivo o presiona Generar objetivo..."
+                            ></textarea>
+
+                        </div>
+
+
+                        <div class="field">
+
+                            <label>
+                                Nivel de Bloom
+                            </label>
+
+                            <select id="bloom">
+
+                                <option value="Ejecutar">
+                                    Ejecutar
+                                </option>
+
+                                <option value="Aplicar">
+                                    Aplicar
+                                </option>
+
+                                <option value="Analizar">
+                                    Analizar
+                                </option>
+
+                                <option value="Evaluar">
+                                    Evaluar
+                                </option>
+
+                                <option value="Crear">
+                                    Crear
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+                        <div class="field">
+
+                            <label>
+                                Tipo de clase
+                            </label>
+
+                            <select id="tipo">
+
+                                <option>Desarrollo de habilidades</option>
+                                <option>Condición física</option>
+                                <option>Juego deportivo</option>
+                                <option>Evaluación</option>
+                                <option>Reforzamiento</option>
+
+                            </select>
+
+                        </div>
+
+
+                        <div class="field full">
+
+                            <button
+                                class="generate-btn"
+                                onclick="generarObjetivo()">
+                                ✨ Generar objetivo
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="panel">
+
+                    <h3>Planificación de la clase</h3>
+
+                    <br>
+
+                    <div class="field">
+
+                        <label>
+                            Actividades
+                        </label>
+
+                        <textarea
+                            id="actividades"
+                            placeholder="Describe las actividades..."
+                        ></textarea>
+
+                    </div>
+
+                    <br>
+
+                    <div class="field">
+
+                        <label>
+                            Indicadores de evaluación
+                        </label>
+
+                        <textarea
+                            id="indicadores"
+                            placeholder="Indicadores observables..."
+                        ></textarea>
+
+                    </div>
+
+                    <br>
+
+                    <div class="field">
+
+                        <label>
+                            Materiales
+                        </label>
+
+                        <textarea
+                            id="materiales"
+                            placeholder="Balones, conos, colchonetas..."
+                        ></textarea>
+
+                    </div>
+
+                    <br>
+
+                    <button
+                        class="save-btn"
+                        onclick="guardarClase()">
+
+                        ☁️ Guardar clase
+
+                    </button>
+
+                </div>
+
+            </section>
+
+
+            <!-- MIS CLASES -->
+
+            <section id="clases" class="hidden">
+
+                <h2 class="section-title">
+                    📚 Mis clases
+                </h2>
+
+                <div id="classesList">
+
+                    <p>
+                        Cargando clases...
+                    </p>
+
+                </div>
+
+            </section>
+
+
+            <!-- OBJETIVOS -->
+
+            <section id="objetivos" class="hidden">
+
+                <h2 class="section-title">
+                    🎯 Generador de objetivos
+                </h2>
+
+                <div class="panel">
+
+                    <p>
+                        Selecciona el curso y contenido para crear
+                        un objetivo de clase.
+                    </p>
+
+                    <br>
+
+                    <button
+                        class="generate-btn"
+                        onclick="generarObjetivo();showSection('crear')">
+
+                        ✨ Generar objetivo
+
+                    </button>
+
+                </div>
+
+            </section>
+
+
+            <!-- EVALUACION -->
+
+            <section id="evaluacion" class="hidden">
+
+                <h2 class="section-title">
+                    📊 Evaluación
+                </h2>
+
+                <div class="cards">
+
+                    <div class="card">
+
+                        <div class="card-icon">📋</div>
+
+                        <h3>Indicadores</h3>
+
+                        <p>
+                            Crea indicadores observables para tus clases.
+                        </p>
+
+                    </div>
+
+
+                    <div class="card">
+
+                        <div class="card-icon">📊</div>
+
+                        <h3>Rúbrica</h3>
+
+                        <p>
+                            Próximamente podrás generar rúbricas automáticamente.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+        </main>
+
+    </div>
+
+</div>
+
+
+<!-- MODAL -->
+
+<div id="modal" class="modal hidden">
+
+    <div class="modal-content">
+
+        <div class="modal-top">
+
+            <h2 id="modalTitle">
+                Clase
+            </h2>
+
+            <button
+                class="close-btn"
+                onclick="cerrarModal()">
+                ✕
+            </button>
+
+        </div>
+
+        <div id="modalBody"></div>
+
+    </div>
+
+</div>
+
+
+<script type="module">
+
+/* ==========================================
+   FIREBASE
+========================================== */
+
+import {
+    initializeApp
+} from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
+
+import {
+    getAuth,
+    createUserWithEmailAndPassword,
+    signInWithEmailAndPassword,
+    signOut,
+    onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
+
+import {
+    getFirestore,
+    collection,
+    addDoc,
+    getDocs,
+    deleteDoc,
+    doc,
+    query,
+    where,
+    orderBy
+} from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
+
+
+const firebaseConfig = {
+
+    apiKey: "AIzaSyDbDZOmY0aoujF3zz6z_d9v9miQmpBGt5o",
+
+    authDomain:
+        "edufisicachile-a8f35.firebaseapp.com",
+
+    projectId:
+        "edufisicachile-a8f35",
+
+    storageBucket:
+        "edufisicachile-a8f35.firebasestorage.app",
+
+    messagingSenderId:
+        "799572469048",
+
+    appId:
+        "1:799572469048:web:2fb6d8c032604c14d54dcd",
+
+    measurementId:
+        "G-594Q9CS88T"
+
 };
-function suggestedBloom(text){
-  let first=(text||'').trim().split(/\s+/)[0].replace(/[.,;:]/g,'');
-  return BLOOM_MAP[first] || 'Aplicar';
-}
-function objectiveForBloom(o){
-  const bloom=$('cBloom').value;
-  const content=$('cContenido').value;
-  const verbs={Recordar:'identificar y reconocer',Comprender:'explicar y relacionar',Aplicar:'ejecutar y aplicar',Analizar:'analizar y seleccionar',Evaluar:'evaluar y justificar',Crear:'diseñar y proponer'};
-  const v=verbs[bloom]||'aplicar';
-  return `${v} acciones y estrategias de ${content.toLowerCase()}, tomando como referencia el OA ${o.code}, para avanzar hacia el aprendizaje esperado con participación segura y activa.`;
-}
-function updateObjectivePreview(){
-  const o=currentOA();
-  if(!o)return;
-  const suggested=suggestedBloom(o.text);
-  $('objectivePreview').innerHTML=`<b>🎯 Objetivo de la clase</b><span class="levelBadge">${$('cBloom').value}</span><p style="margin:8px 0 0;color:#5f7085;line-height:1.55">${objectiveForBloom(o)}</p><div class="helper">OA base: ${o.code} · ${o.axis} · Nivel sugerido por verbo: <b>${suggested}</b></div>`;
+
+
+const app = initializeApp(firebaseConfig);
+
+const auth = getAuth(app);
+
+const db = getFirestore(app);
+
+
+/* ==========================================
+   VARIABLES
+========================================== */
+
+let currentUser = null;
+
+
+/* ==========================================
+   LOGIN
+========================================== */
+
+window.login = async function(){
+
+    const email =
+        document.getElementById("email").value.trim();
+
+    const password =
+        document.getElementById("password").value;
+
+    const message =
+        document.getElementById("loginMessage");
+
+
+    if(!email || !password){
+
+        message.textContent =
+            "Completa correo y contraseña.";
+
+        return;
+    }
+
+
+    try{
+
+        await signInWithEmailAndPassword(
+            auth,
+            email,
+            password
+        );
+
+        message.textContent = "";
+
+    }catch(error){
+
+        console.error(error);
+
+        message.textContent =
+            "No se pudo iniciar sesión.";
+
+    }
+
+};
+
+
+/* ==========================================
+   REGISTRO
+========================================== */
+
+window.register = async function(){
+
+    const email =
+        document.getElementById("email").value.trim();
+
+    const password =
+        document.getElementById("password").value;
+
+    const message =
+        document.getElementById("loginMessage");
+
+
+    if(!email || password.length < 6){
+
+        message.textContent =
+            "Usa un correo válido y una contraseña de al menos 6 caracteres.";
+
+        return;
+    }
+
+
+    try{
+
+        await createUserWithEmailAndPassword(
+            auth,
+            email,
+            password
+        );
+
+        message.textContent =
+            "Cuenta creada correctamente.";
+
+    }catch(error){
+
+        console.error(error);
+
+        message.textContent =
+            "No se pudo crear la cuenta.";
+
+    }
+
+};
+
+
+/* ==========================================
+   LOGOUT
+========================================== */
+
+window.logout = async function(){
+
+    await signOut(auth);
+
+};
+
+
+/* ==========================================
+   ESTADO DEL USUARIO
+========================================== */
+
+onAuthStateChanged(auth, async(user)=>{
+
+    const loginScreen =
+        document.getElementById("loginScreen");
+
+    const appScreen =
+        document.getElementById("app");
+
+    if(user){
+
+        currentUser = user;
+
+        loginScreen.classList.add("hidden");
+
+        appScreen.classList.remove("hidden");
+
+        document.getElementById("userEmail")
+            .textContent = user.email;
+
+        await cargarClases();
+
+    }else{
+
+        currentUser = null;
+
+        loginScreen.classList.remove("hidden");
+
+        appScreen.classList.add("hidden");
+
+    }
+
+});
+
+
+/* ==========================================
+   NAVEGACION
+========================================== */
+
+window.showSection = function(section, button=null){
+
+    const sections = [
+        "inicio",
+        "crear",
+        "clases",
+        "objetivos",
+        "evaluacion"
+    ];
+
+
+    sections.forEach(id=>{
+
+        const element =
+            document.getElementById(id);
+
+        if(element){
+
+            element.classList.add("hidden");
+
+        }
+
+    });
+
+
+    const selected =
+        document.getElementById(section);
+
+    if(selected){
+
+        selected.classList.remove("hidden");
+
+    }
+
+
+    document.querySelectorAll(".menu-btn")
+        .forEach(btn=>btn.classList.remove("active"));
+
+
+    if(button){
+
+        button.classList.add("active");
+
+    }
+
+};
+
+
+/* ==========================================
+   GENERAR OBJETIVO
+========================================== */
+
+window.generarObjetivo = function(){
+
+    const curso =
+        document.getElementById("curso").value;
+
+    const contenido =
+        document.getElementById("contenido").value.trim();
+
+    const bloom =
+        document.getElementById("bloom").value;
+
+
+    if(!contenido){
+
+        alert(
+            "Escribe primero el contenido de la clase."
+        );
+
+        return;
+
+    }
+
+
+    const objetivo =
+
+        `${bloom} habilidades relacionadas con ${contenido}, ` +
+        `participando activamente en actividades motrices, ` +
+        `respetando las reglas y demostrando una actitud ` +
+        `de colaboración y responsabilidad durante la clase.`;
+
+
+    document.getElementById("objetivo").value =
+        objetivo;
+
+};
+
+
+/* ==========================================
+   GUARDAR CLASE
+========================================== */
+
+window.guardarClase = async function(){
+
+    if(!currentUser){
+
+        alert("Debes iniciar sesión.");
+
+        return;
+
+    }
+
+
+    const curso =
+        document.getElementById("curso").value;
+
+    const duracion =
+        document.getElementById("duracion").value;
+
+    const contenido =
+        document.getElementById("contenido").value.trim();
+
+    const objetivo =
+        document.getElementById("objetivo").value.trim();
+
+    const bloom =
+        document.getElementById("bloom").value;
+
+    const tipo =
+        document.getElementById("tipo").value;
+
+    const actividades =
+        document.getElementById("actividades").value.trim();
+
+    const indicadores =
+        document.getElementById("indicadores").value.trim();
+
+    const materiales =
+        document.getElementById("materiales").value.trim();
+
+
+    if(!contenido || !objetivo){
+
+        alert(
+            "Completa al menos contenido y objetivo."
+        );
+
+        return;
+
+    }
+
+
+    try{
+
+        await addDoc(
+            collection(db,"clases"),
+            {
+
+                uid:currentUser.uid,
+
+                profesor:currentUser.email,
+
+                curso:curso,
+
+                duracion:duracion,
+
+                contenido:contenido,
+
+                objetivo:objetivo,
+
+                bloom:bloom,
+
+                tipo:tipo,
+
+                actividades:actividades,
+
+                indicadores:indicadores,
+
+                materiales:materiales,
+
+                fecha:new Date().toISOString()
+
+            }
+        );
+
+
+        alert(
+            "✅ Clase guardada correctamente."
+        );
+
+
+        limpiarFormulario();
+
+        await cargarClases();
+
+        showSection("clases");
+
+
+    }catch(error){
+
+        console.error(error);
+
+        alert(
+            "No se pudo guardar la clase. Revisa las reglas de Firestore."
+        );
+
+    }
+
+};
+
+
+/* ==========================================
+   CARGAR CLASES
+========================================== */
+
+async function cargarClases(){
+
+    if(!currentUser) return;
+
+
+    const container =
+        document.getElementById("classesList");
+
+
+    container.innerHTML =
+        "<p>Cargando clases...</p>";
+
+
+    try{
+
+        const q = query(
+
+            collection(db,"clases"),
+
+            where(
+                "uid",
+                "==",
+                currentUser.uid
+            ),
+
+            orderBy(
+                "fecha",
+                "desc"
+            )
+
+        );
+
+
+        const snapshot =
+            await getDocs(q);
+
+
+        document.getElementById("totalClasses")
+            .textContent = snapshot.size;
+
+
+        if(snapshot.empty){
+
+            container.innerHTML = `
+
+                <div class="panel">
+
+                    <h3>Aún no tienes clases guardadas.</h3>
+
+                    <br>
+
+                    <p>
+                        Crea tu primera clase desde
+                        "Crear mi clase".
+                    </p>
+
+                </div>
+
+            `;
+
+            return;
+
+        }
+
+
+        container.innerHTML = "";
+
+
+        snapshot.forEach(item=>{
+
+            const data =
+                item.data();
+
+
+            const div =
+                document.createElement("div");
+
+
+            div.className =
+                "class-item";
+
+
+            div.innerHTML = `
+
+                <div class="class-header">
+
+                    <div>
+
+                        <h3>
+                            ${escapeHTML(data.contenido)}
+                        </h3>
+
+                        <div class="class-info">
+
+                            ${escapeHTML(data.curso)}
+                            ·
+                            ${escapeHTML(data.duracion)}
+                            ·
+                            ${escapeHTML(data.tipo)}
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="class-actions">
+
+                    <button
+                        class="view-btn"
+                        onclick='verClase(${JSON.stringify({
+                            ...data,
+                            id:item.id
+                        })})'>
+
+                        👁 Ver clase
+
+                    </button>
+
+
+                    <button
+                        class="delete-btn"
+                        onclick="eliminarClase('${item.id}')">
+
+                        🗑 Eliminar
+
+                    </button>
+
+                </div>
+
+            `;
+
+
+            container.appendChild(div);
+
+        });
+
+
+    }catch(error){
+
+        console.error(error);
+
+        container.innerHTML = `
+
+            <div class="panel">
+
+                <p>
+                    No se pudieron cargar las clases.
+                </p>
+
+            </div>
+
+        `;
+
+    }
+
 }
 
-function currentOA(){let l=$('cCurso').value,c=$('cOA').value;return allOA().find(o=>o.level===l&&o.code===c)||allOA()[0]}
-function generateClass(){
-  let o=currentOA(),sport=$('cContenido').value,need=$('cNeed').value.trim();
-  let date=$('cFecha').value || new Date().toISOString().slice(0,10);
-  let hora=$('cHora').value;
-  let bloom=$('cBloom').value;
-  let p={
-    id:Date.now(),curso:o.level,oa:o.code,oaText:o.text,axis:o.axis,contenido:sport,
-    duracion:$('cDur').value,fecha:date,hora:hora,bloom:bloom,enfoque:$('cEnfoque').value,
-    objetivo:objectiveForBloom(o),
-    warm:`Activación de 15 min: movilidad articular, desplazamientos y juego breve relacionado con ${sport.toLowerCase()}. Presentar el propósito, criterios de éxito y normas de seguridad.`,
-    main:`Progresión de 50 min: dominio individual → trabajo con compañero/a → situación reducida. Ajustar espacio, velocidad, distancia, implementos y oposición para que el desafío corresponda al nivel del curso.`,
-    game:`Juego aplicado de 15 min de ${sport.toLowerCase()} con reglas simples, rotación de roles y pausas breves de retroalimentación. Observar directamente el OA y el objetivo de la clase.`,
-    close:`Cierre de 10 min: movilidad suave y reflexión. El estudiante identifica qué logró, qué estrategia utilizó y qué debe seguir practicando.`,
-    adapt:`DUA: demostración visual, consignas breves, opciones de distancia/velocidad/implemento, parejas de apoyo y niveles de desafío. ${need?'Foco específico: '+need:''}`,
-    indicators:[
-      `Ejecuta la habilidad principal de acuerdo con el criterio trabajado.`,
-      `Aplica la habilidad en una situación progresiva y toma decisiones pertinentes.`,
-      `Participa respetando reglas, compañeros/as, materiales y normas de seguridad.`,
-      `Explica o demuestra una mejora respecto del inicio de la clase.`
-    ]
-  };
-  window.currentPlan=p;
-  $('classResult').innerHTML=planHTML(p)+`<br><button class="btn primary" onclick="savePlan()">💾 Guardar y conectar al Planner</button>`;
-  toast(`✨ Clase ${date} · ${hora} lista para el Planner`);
-}
-function planHTML(p){return `<div class="plan"><div class="planHead"><h2>🏃 ${p.curso} · ${p.contenido}</h2><p>${p.oa} · ${p.axis}</p><div class="chips"><span>⏱ ${p.duracion}</span><span>🧠 ${p.bloom}</span><span>🎯 ${p.enfoque}</span><span>📅 ${p.fecha}</span><span>⏰ ${p.hora}</span></div></div><div class="planGrid"><div class="box full"><h4>🎯 Objetivo de Aprendizaje</h4><p>${p.oaText}</p></div><div class="box full"><h4>🧠 Objetivo de la clase · Taxonomía: ${p.bloom}</h4><p>${p.objetivo||'Aplicar el OA en una situación motriz significativa.'}</p></div><div class="box"><h4>🔥 Inicio · 15 min</h4><p>${p.warm}</p></div><div class="box"><h4>🏃 Desarrollo · 50 min</h4><p>${p.main}</p></div><div class="box"><h4>🏆 Juego aplicado · 15 min</h4><p>${p.game}</p></div><div class="box"><h4>🧘 Cierre · 10 min</h4><p>${p.close}</p></div><div class="box"><h4>♿ Inclusión / DUA</h4><p>${p.adapt}</p></div><div class="box"><h4>📦 Materiales</h4><p>Balones, conos, petos, aros/cuerdas según actividad, silbato, agua y espacio seguro.</p></div><div class="box"><h4>🛡 Seguridad</h4><p>Revisar superficie y obstáculos, explicar reglas, controlar distancias, hidratación y uso correcto de implementos.</p></div><div class="box full"><h4>📊 Indicadores observables</h4><ul>${p.indicators.map(x=>`<li>${x}</li>`).join('')}</ul></div></div></div>`}
-function savePlan(){let a=JSON.parse(localStorage.getItem('efpro_classes')||'[]');a.push(window.currentPlan);localStorage.setItem('efpro_classes',JSON.stringify(a));updateCounts();renderPlanner();toast('✅ Clase guardada y conectada')}
-function makeRubric(){let l=$('rCurso').value,c=$('rOA').value,act=$('rAct').value||'Actividad';$('rubricResult').innerHTML=`<div class="plan"><div class="planHead"><h2>📊 ${act}</h2><p>${c} · ${l}</p></div><div style="padding:18px;overflow:auto"><table class="rubric"><tr><th>Criterio</th><th>4 · Destacado</th><th>3 · Logrado</th><th>2 · En desarrollo</th><th>1 · Inicial</th></tr>${['Ejecución técnica','Toma de decisiones','Participación y cooperación','Seguridad y autocuidado'].map(x=>`<tr><td><b>${x}</b></td><td>Ejecuta con control, precisión y autonomía.</td><td>Cumple el criterio en la mayor parte.</td><td>Lo logra con apoyo o ajustes.</td><td>Requiere modelado y práctica guiada.</td></tr>`).join('')}</table></div></div>`;toast('📊 Rúbrica creada')}
-function monday(d){let x=new Date(d),n=x.getDay();x.setDate(x.getDate()+(n===0?-6:1-n));x.setHours(0,0,0,0);return x}
-function renderPlanner(){let b=monday(new Date());b.setDate(b.getDate()+weekOffset*7);let h='<div class="cell day">Hora</div>',days=['Lun','Mar','Mié','Jue','Vie'];for(let i=0;i<5;i++){let d=new Date(b);d.setDate(b.getDate()+i),today=d.toDateString()===new Date().toDateString();h+=`<div class="cell day ${today?'today':''}">${days[i]}<small style="display:block">${d.toLocaleDateString('es-CL',{day:'2-digit',month:'2-digit'})}</small>${today?'<span style="font-size:8px;background:#f04438;color:#fff;padding:2px 5px;border-radius:99px">HOY</span>':''}</div>`}let slots=[['08:30','10:00'],['10:00','11:30'],['11:30','13:00'],['13:00','14:30'],['14:30','16:00'],['16:00','17:00']],saved=JSON.parse(localStorage.getItem('efpro_classes')||'[]');slots.forEach(s=>{h+=`<div class="cell slot"><b>${s[0]}</b><br>– ${s[1]}</div>`;for(let i=0;i<5;i++){let d=new Date(b);d.setDate(b.getDate()+i);let key=d.toISOString().slice(0,10),c=saved.find(x=>x.fecha===key&&x.hora===s[0]);h+=`<div class="cell">${c?`<div class="class" onclick="openSaved(${c.id})"><b>${c.curso}</b><br>${c.contenido}<br><small>${c.oa}</small></div>`:`<div class="empty" onclick="newForDate('${key}','${s[0]}')">＋</div>`}</div>`}});$('weekGrid').innerHTML=h;let a=new Date(b),z=new Date(b);z.setDate(z.getDate()+4);$('weekLabel').textContent=`${a.toLocaleDateString('es-CL',{day:'2-digit',month:'long'})} – ${z.toLocaleDateString('es-CL',{day:'2-digit',month:'long',year:'numeric'})}`}
-function changeWeek(n){if(n===0)weekOffset=0;else weekOffset+=n;renderPlanner()}
-function newForDate(date,hora){
-      go('crear');window.prefDate=date;window.prefHora=hora;
-      $('cFecha').value=date;$('cHora').value=hora;
-      updateObjectivePreview();
-      toast(`📅 Fecha y bloque seleccionados: ${date} · ${hora}`);
+
+/* ==========================================
+   VER CLASE
+========================================== */
+
+window.verClase = function(data){
+
+    document.getElementById("modalTitle")
+        .textContent =
+        data.contenido;
+
+
+    document.getElementById("modalBody")
+        .innerHTML = `
+
+        <div class="lesson-section">
+
+            <h3>📚 Información</h3>
+
+            <div class="lesson-box">
+
+                <strong>Curso:</strong>
+                ${escapeHTML(data.curso)}
+
+                <br><br>
+
+                <strong>Duración:</strong>
+                ${escapeHTML(data.duracion)}
+
+                <br><br>
+
+                <strong>Tipo:</strong>
+                ${escapeHTML(data.tipo)}
+
+            </div>
+
+        </div>
+
+
+        <div class="lesson-section">
+
+            <h3>🎯 Objetivo de aprendizaje</h3>
+
+            <div class="lesson-box">
+
+                ${escapeHTML(data.objetivo)}
+
+            </div>
+
+        </div>
+
+
+        <div class="lesson-section">
+
+            <h3>🧠 Taxonomía de Bloom</h3>
+
+            <div class="lesson-box">
+
+                ${escapeHTML(data.bloom)}
+
+            </div>
+
+        </div>
+
+
+        <div class="lesson-section">
+
+            <h3>🏃 Actividades</h3>
+
+            <div class="lesson-box">
+
+                ${escapeHTML(data.actividades || "Sin actividades registradas.")}
+
+            </div>
+
+        </div>
+
+
+        <div class="lesson-section">
+
+            <h3>📊 Indicadores de evaluación</h3>
+
+            <div class="lesson-box">
+
+                ${escapeHTML(data.indicadores || "Sin indicadores registrados.")}
+
+            </div>
+
+        </div>
+
+
+        <div class="lesson-section">
+
+            <h3>🎒 Materiales</h3>
+
+            <div class="lesson-box">
+
+                ${escapeHTML(data.materiales || "Sin materiales registrados.")}
+
+            </div>
+
+        </div>
+
+    `;
+
+
+    document.getElementById("modal")
+        .classList.remove("hidden");
+
+};
+
+
+/* ==========================================
+   CERRAR MODAL
+========================================== */
+
+window.cerrarModal = function(){
+
+    document.getElementById("modal")
+        .classList.add("hidden");
+
+};
+
+
+/* ==========================================
+   ELIMINAR CLASE
+========================================== */
+
+window.eliminarClase = async function(id){
+
+    const confirmar =
+        confirm(
+            "¿Seguro que quieres eliminar esta clase?"
+        );
+
+
+    if(!confirmar) return;
+
+
+    try{
+
+        await deleteDoc(
+            doc(db,"clases",id)
+        );
+
+
+        await cargarClases();
+
+
+    }catch(error){
+
+        console.error(error);
+
+        alert(
+            "No se pudo eliminar la clase."
+        );
+
     }
-function renderSaved(){let a=JSON.parse(localStorage.getItem('efpro_classes')||'[]');$('savedList').innerHTML=a.length?a.map(c=>`<div class="saved"><div><b>${c.curso} · ${c.contenido}</b><small>📅 ${c.fecha} · ⏰ ${c.hora} · ${c.oa} · 🧠 ${c.bloom}</small></div><div class="actions"><button class="btn secondary" onclick="openSaved(${c.id})">Ver</button><button class="btn green" onclick="reuse(${c.id})">Reutilizar</button><button class="btn orange" onclick="removeSaved(${c.id})">Eliminar</button></div></div>`).join(''):'<div class="card">Todavía no tienes clases guardadas.</div>'}
-function openSaved(id){let c=JSON.parse(localStorage.getItem('efpro_classes')||'[]').find(x=>x.id===id);if(!c)return;$('modalTitle').textContent=`${c.curso} · ${c.contenido}`;$('modalBody').innerHTML=planHTML(c);$('modal').classList.add('show')}
-function closeModal(){$('modal').classList.remove('show')}
-function reuse(id){let c=JSON.parse(localStorage.getItem('efpro_classes')||'[]').find(x=>x.id===id);if(!c)return;go('crear');$('cCurso').value=c.curso;syncOA();$('cOA').value=c.oa;$('cContenido').value=c.contenido;toast('♻️ Clase cargada')}
-function removeSaved(id){let a=JSON.parse(localStorage.getItem('efpro_classes')||'[]').filter(x=>x.id!==id);localStorage.setItem('efpro_classes',JSON.stringify(a));renderSaved();updateCounts();renderPlanner();toast('🗑 Eliminada')}
-function setToday(){const d=new Date();$('cFecha').value=d.toISOString().slice(0,10);updateObjectivePreview()}
-$('cOA').addEventListener('change',()=>{let o=currentOA();if(o)$('cBloom').value=suggestedBloom(o.text);updateObjectivePreview()});
-$('cContenido').addEventListener('change',updateObjectivePreview);
-init();setToday();
-</script></body></html>
+
+};
+
+
+/* ==========================================
+   LIMPIAR FORMULARIO
+========================================== */
+
+function limpiarFormulario(){
+
+    document.getElementById("contenido")
+        .value = "";
+
+    document.getElementById("objetivo")
+        .value = "";
+
+    document.getElementById("actividades")
+        .value = "";
+
+    document.getElementById("indicadores")
+        .value = "";
+
+    document.getElementById("materiales")
+        .value = "";
+
+}
+
+
+/* ==========================================
+   SEGURIDAD HTML
+========================================== */
+
+function escapeHTML(text){
+
+    if(!text) return "";
+
+    return String(text)
+
+        .replace(/&/g,"&amp;")
+
+        .replace(/</g,"&lt;")
+
+        .replace(/>/g,"&gt;")
+
+        .replace(/"/g,"&quot;")
+
+        .replace(/'/g,"&#039;");
+
+}
+
+</script>
+
+</body>
+</html>
