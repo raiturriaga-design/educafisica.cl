@@ -62,6 +62,14 @@ input,select,textarea{width:100%;border:1px solid #dce4ee;border-radius:12px;pad
 @media(max-width:470px){.v105-feature-grid{grid-template-columns:1fr}.stats{grid-template-columns:1fr 1fr}.v105-login-logo{width:58px;height:58px}}
 @media print{header,aside,#v105BottomNav,.viewerBar,footer{display:none!important}.viewer{position:static;display:block;background:#fff}.viewerContent{margin:0;max-width:none}.viewerPlan{box-shadow:none;border:0}}
 </style>
+
+<style id="edufisica-v8-auth-style">
+.edf-v8-guest{width:100%;margin-top:10px;border:1px solid #cfe0f3;border-radius:14px;padding:13px;background:linear-gradient(135deg,#f5fbff,#f4f1ff);color:#174a7c;font-weight:950;cursor:pointer}
+.edf-v8-guest:hover{background:linear-gradient(135deg,#eaf6ff,#eee9ff)}
+.edf-v8-mode{margin-top:10px;font-size:10px;color:#64748b;text-align:center}
+.edf-v8-user-badge{display:inline-flex;align-items:center;gap:5px;padding:5px 8px;border-radius:999px;background:#eaf7ef;color:#167447;font-size:9px;font-weight:950}
+</style>
+
 </head>
 <body>
 
@@ -70,7 +78,7 @@ input,select,textarea{width:100%;border:1px solid #dce4ee;border-radius:12px;pad
   <div class="v105-login-card">
     <div class="v105-login-logo">EF</div>
     <h1>EduFísica Chile</h1>
-    <p>V1 PLUS · Tu espacio docente para planificar Educación Física.</p>
+    <p>V8 · Planificador de Educación Física para Chile.</p>
     <label for="v105Email">Correo electrónico</label>
     <input id="v105Email" type="email" placeholder="profesor@email.com" autocomplete="email">
     <label for="v105Password">Contraseña</label>
@@ -79,8 +87,9 @@ input,select,textarea{width:100%;border:1px solid #dce4ee;border-radius:12px;pad
       <button class="v105-login-btn v105-login-primary" onclick="v105Login()">Iniciar sesión</button>
       <button class="v105-login-btn v105-login-secondary" onclick="v105Register()">Crear cuenta</button>
     </div>
+    <button class="edf-v8-guest" type="button" onclick="edfV8Guest()">🚀 Continuar sin usuario</button>
     <div id="v105LoginMsg" class="v105-login-msg"></div>
-    <div class="v105-demo">🔐 Tus clases quedan asociadas a tu cuenta. La interfaz V1 se mantiene como base y ahora evoluciona a V1 PLUS.</div>
+    <div class="v105-demo">🔐 Con cuenta: tus clases quedan separadas por usuario. 🚀 Sin usuario: puedes usar el planificador y guardar tus clases en este dispositivo.</div>
   </div>
 </div>
 <div id="v105App">
@@ -561,6 +570,7 @@ window.addEventListener("load",()=>{
 <script type="module" id="v105-firebase">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
+
 const firebaseConfig={
  apiKey:"AIzaSyDbDZOmY0aoujF3zz6z_d9v9miQmpBGt5o",
  authDomain:"edufisicachile-a8f35.firebaseapp.com",
@@ -570,12 +580,118 @@ const firebaseConfig={
  appId:"1:799572469048:web:2fb6d8c032604c14d54dcd",
  measurementId:"G-594Q9CS88T"
 };
-const app=initializeApp(firebaseConfig); const auth=getAuth(app);
-window.v105Login=async()=>{const email=document.getElementById("v105Email").value.trim();const password=document.getElementById("v105Password").value;const msg=document.getElementById("v105LoginMsg");if(!email||!password){msg.textContent="Completa correo y contraseña.";return;}try{await signInWithEmailAndPassword(auth,email,password);msg.textContent="";}catch(e){console.error(e);msg.textContent="No se pudo iniciar sesión. Revisa tus datos.";}};
-window.v105Register=async()=>{const email=document.getElementById("v105Email").value.trim();const password=document.getElementById("v105Password").value;const msg=document.getElementById("v105LoginMsg");if(!email||password.length<6){msg.textContent="Usa un correo válido y una contraseña de al menos 6 caracteres.";return;}try{await createUserWithEmailAndPassword(auth,email,password);msg.textContent="Cuenta creada correctamente.";}catch(e){console.error(e);msg.textContent="No se pudo crear la cuenta.";}};
-window.v105Logout=async()=>{await signOut(auth);};
-onAuthStateChanged(auth,user=>{window.currentUser=user||null;document.getElementById("v105Login").classList.toggle("hidden",!!user);document.getElementById("v105App").classList.toggle("hidden",!user);const email=document.getElementById("v105UserEmail");if(email)email.textContent=user?.email||"";if(user){try{populate();}catch(e){console.error(e);}try{updateStats();renderCalendar();renderCourses();}catch(e){console.error(e);}}});
+
+let auth=null;
+try{
+  const app=initializeApp(firebaseConfig);
+  auth=getAuth(app);
+  window.edfV8FirebaseReady=true;
+}catch(e){
+  console.error("Firebase no pudo inicializarse:",e);
+  window.edfV8FirebaseReady=false;
+}
+
+const msg=()=>document.getElementById("v105LoginMsg");
+const show=(t)=>{const el=msg();if(el)el.textContent=t};
+
+function friendlyError(e,mode){
+  const code=e?.code||"";
+  const map={
+    "auth/email-already-in-use":"Ese correo ya tiene una cuenta. Prueba Iniciar sesión.",
+    "auth/invalid-email":"El correo electrónico no es válido.",
+    "auth/weak-password":"La contraseña es demasiado débil. Usa al menos 6 caracteres.",
+    "auth/invalid-credential":"Correo o contraseña incorrectos.",
+    "auth/user-not-found":"No existe una cuenta con ese correo.",
+    "auth/wrong-password":"La contraseña no coincide.",
+    "auth/too-many-requests":"Hay demasiados intentos. Espera unos minutos y vuelve a probar.",
+    "auth/network-request-failed":"No hay conexión con Firebase. Puedes continuar sin usuario.",
+    "auth/operation-not-allowed":"Firebase tiene desactivado Email/Password. Actívalo en Authentication → Sign-in method.",
+    "auth/unauthorized-domain":"Este dominio no está autorizado en Firebase Authentication. Agrega el dominio en Authentication → Settings → Authorized domains."
+  };
+  show(map[code] || (mode==="register" ? "No se pudo crear la cuenta. Revisa la configuración de Firebase." : "No se pudo iniciar sesión. Revisa tus datos."));
+}
+
+window.v105Login=async()=>{
+  if(!auth){show("Firebase no está disponible. Puedes entrar como invitado.");return}
+  const email=document.getElementById("v105Email").value.trim();
+  const password=document.getElementById("v105Password").value;
+  if(!email||!password){show("Completa correo y contraseña.");return}
+  try{
+    show("Conectando...");
+    await signInWithEmailAndPassword(auth,email,password);
+    sessionStorage.removeItem("edfV8Guest");
+    show("");
+  }catch(e){console.error(e);friendlyError(e,"login")}
+};
+
+window.v105Register=async()=>{
+  if(!auth){show("Firebase no está disponible. Puedes usar EduFísica como invitado.");return}
+  const email=document.getElementById("v105Email").value.trim();
+  const password=document.getElementById("v105Password").value;
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){show("Escribe un correo válido.");return}
+  if(password.length<6){show("Usa una contraseña de al menos 6 caracteres.");return}
+  try{
+    show("Creando cuenta...");
+    const cred=await createUserWithEmailAndPassword(auth,email,password);
+    sessionStorage.removeItem("edfV8Guest");
+    show(`✅ Cuenta creada: ${cred.user.email}`);
+  }catch(e){console.error(e);friendlyError(e,"register")}
+};
+
+window.v105Logout=async()=>{
+  try{if(auth)await signOut(auth)}catch(e){console.error(e)}
+  window.edfV8GuestMode=false;
+  sessionStorage.removeItem("edfV8Guest");
+  window.currentUser=null;
+  document.getElementById("v105Login").classList.remove("hidden");
+  document.getElementById("v105App").classList.add("hidden");
+  show("Sesión cerrada.");
+};
+
+onAuthStateChanged(auth,user=>{
+  if(user){
+    window.edfV8GuestMode=false;
+    sessionStorage.removeItem("edfV8Guest");
+    window.currentUser=user;
+    document.getElementById("v105Login").classList.add("hidden");
+    document.getElementById("v105App").classList.remove("hidden");
+    const email=document.getElementById("v105UserEmail");
+    if(email)email.innerHTML=`<span class="edf-v8-user-badge">👤 ${user.email||"Usuario"}</span>`;
+    try{populate()}catch(e){console.error(e)}
+    try{updateStats();renderCalendar();renderCourses()}catch(e){console.error(e)}
+  }else if(!window.edfV8GuestMode){
+    window.currentUser=null;
+    document.getElementById("v105Login").classList.remove("hidden");
+    document.getElementById("v105App").classList.add("hidden");
+  }
+});
 </script>
+
+<script id="edufisica-v8-guest-mode">
+(function(){
+  function showGuest(){
+    window.edfV8GuestMode=true;
+    sessionStorage.setItem("edfV8Guest","1");
+    window.currentUser=null;
+    const login=document.getElementById("v105Login"),app=document.getElementById("v105App");
+    if(login)login.classList.add("hidden");
+    if(app)app.classList.remove("hidden");
+    const email=document.getElementById("v105UserEmail");
+    if(email)email.innerHTML='<span class="edf-v8-user-badge">🚀 Invitado · este dispositivo</span>';
+    try{populate()}catch(e){}
+    try{updateStats();renderCalendar();renderCourses()}catch(e){}
+    const m=document.getElementById("v105LoginMsg");if(m)m.textContent="";
+    if(typeof toast==="function")toast("🚀 Entraste como invitado. Tus clases se guardarán en este dispositivo.");
+  }
+  window.edfV8Guest=showGuest;
+
+  // If the user explicitly chose guest in this browser session, restore it.
+  if(sessionStorage.getItem("edfV8Guest")==="1"){
+    setTimeout(showGuest,120);
+  }
+})();
+</script>
+
 
 <script>
 function v1PlusBackup(){
@@ -2462,6 +2578,16 @@ function v1PlusRestore(input){
 
   setTimeout(()=>{decorateWeek();decorateMonth()},180);
 })();
+</script>
+
+
+<script id="edufisica-v8-mode-badge">
+setTimeout(function(){
+  const app=document.getElementById("v105App");
+  if(!app)return;
+  const email=document.getElementById("v105UserEmail");
+  if(email && window.edfV8GuestMode) email.innerHTML='<span class="edf-v8-user-badge">🚀 Invitado · este dispositivo</span>';
+},300);
 </script>
 
 </body>
