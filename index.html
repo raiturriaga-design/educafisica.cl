@@ -219,7 +219,7 @@ input,select,textarea{width:100%;border:1px solid #dce4ee;border-radius:12px;pad
 <div class="form"><div class="fields">
 <div class="field"><label>Curso</label><select id="curso" onchange="loadCreateOA()"></select></div>
 <div class="field"><label>Fecha</label><input type="date" id="fecha"></div>
-<div class="field"><label>Día</label><select id="dia"><option>Lunes</option><option>Martes</option><option>Miércoles</option><option>Jueves</option><option>Viernes</option></select></div>
+<div class="field"><label>Día</label><select id="dia"><option>Lunes</option><option>Martes</option><option>Miércoles</option><option>Jueves</option><option>Viernes</option><option>Sábado</option><option>Domingo</option></select></div>
 <div class="field"><label>Hora</label><select id="hora"><option>08:00</option><option>09:00</option><option>10:00</option><option>11:00</option><option>12:00</option><option>14:00</option><option>15:00</option></select></div>
 <div class="field"><label>Duración</label><select id="duracion"><option>45 minutos</option><option>60 minutos</option><option>90 minutos</option></select></div>
 <div class="field"><label>Unidad</label><input id="unidad" placeholder="Ej.: Juegos deportivos colectivos"></div>
@@ -234,7 +234,7 @@ input,select,textarea{width:100%;border:1px solid #dce4ee;border-radius:12px;pad
 </section>
 
 <section id="oa" class="page">
-<div class="hero"><h2>🎯 Banco de OA</h2><p>Filtra por curso y eje, busca palabras y usa el OA directamente en una planificación.</p></div>
+<div class="hero"><h2>🎯 Banco de OA</h2><p>Filtra por curso y eje, busca palabras y usa el OA directamente en una planificación.</p><p style="margin-top:10px"><b>Biblioteca de referencia:</b> la selección local es parcial y debe contrastarse con los OA vigentes publicados por MINEDUC. <a href="https://www.curriculumnacional.cl/curriculum" target="_blank" rel="noopener" style="color:white;text-decoration:underline">Abrir Currículum Nacional ↗</a></p></div>
 <div class="panel"><div class="oaToolbar"><input id="oaSearch" placeholder="🔎 Buscar OA, contenido o código..." oninput="renderOA()"><select id="oaCurso" onchange="renderOA()"></select><select id="oaEje" onchange="renderOA()"><option value="">Todos los ejes</option><option>Habilidades motrices</option><option>Vida activa y saludable</option><option>Seguridad, juego limpio y liderazgo</option><option>Responsabilidad personal y social</option></select></div><div id="oaList"></div></div>
 </section>
 
@@ -346,7 +346,7 @@ function populate(){
  ["curso","evCurso","progCurso"].forEach(id=>$(id).innerHTML=opts);
  $("oaCurso").innerHTML='<option value="">Todos los cursos</option>'+opts;
  $("statOA").innerText=OA.length;
- $("fecha").value=new Date().toISOString().slice(0,10);
+ const hoy=new Date();$("fecha").value=`${hoy.getFullYear()}-${String(hoy.getMonth()+1).padStart(2,"0")}-${String(hoy.getDate()).padStart(2,"0")}`;
  loadCreateOA();loadEvalOA();renderCourses();renderOA();renderActs();renderCalendar();updateStats();
 }
 function renderCourses(){$("courseGrid").innerHTML=cursos.map(c=>{let n=classes().filter(x=>x.curso===c).length;return `<div class="course" onclick="selectCourse('${c}')"><small>Educación Física y Salud</small><h3>${c}</h3><div>${n} clase${n===1?"":"s"} en Planner</div><br><b>Planificar →</b></div>`}).join("")}
@@ -494,7 +494,7 @@ function v103DecorateCalendar(){
   planner.dataset.v103="1";
   const note=document.createElement("div");
   note.className="v103-calendar-note";
-  note.innerHTML=`🇨🇱 <b>Calendario Chile 2026</b> · Fechas oficiales MINEDUC · Bloques de 90 minutos · <span>${CHILE_CALENDAR_2026.horarios.map(x=>x.inicio+"–"+x.fin).join(" · ")}</span>`;
+  note.innerHTML=`🇨🇱 <b>Calendario escolar Chile 2026</b> · Revisa la resolución de tu región · Bloques de 90 minutos · <span>${CHILE_CALENDAR_2026.horarios.map(x=>x.inicio+"–"+x.fin).join(" · ")}</span>`;
   planner.parentNode.insertBefore(note,planner);
 }
 window.addEventListener("load",()=>{
@@ -519,7 +519,7 @@ window.addEventListener("load",()=>{
   function pretty(d){
     return d.toLocaleDateString("es-CL",{weekday:"long",day:"2-digit",month:"long",year:"numeric"});
   }
-  window.V104_TODAY = new Date(2026,7,28); // fecha actual de esta versión
+  window.V104_TODAY = new Date(); // usa la fecha local actual del dispositivo
   window.V104_WEEK = mondayOf(V104_TODAY);
 
   // Keep a real ISO date for newly created planner items when the app uses a date field.
@@ -545,7 +545,7 @@ window.addEventListener("load",()=>{
       el.innerHTML=`<b>${nombre}</b><small style="display:block;opacity:.72">${fecha}</small>${key(d)===key(window.V104_TODAY)?'<span style="display:inline-block;margin-top:4px;padding:3px 7px;border-radius:99px;background:#155EEF;color:white;font-size:9px">HOY</span>':''}`;
     });
     const note=document.querySelector(".v103-calendar-note");
-    if(note) note.innerHTML=`🇨🇱 <b>Planner Chile 2026</b> · <span>Hoy: ${pretty(window.V104_TODAY)}</span> · Semana: ${pretty(window.V104_WEEK)}`;
+    if(note) note.innerHTML=`🇨🇱 <b>Planner Chile</b> · <span>Hoy: ${pretty(window.V104_TODAY)}</span> · Semana: ${pretty(window.V104_WEEK)}`;
   }
   window.addEventListener("load",()=>setTimeout(decorate,500));
   const oldRender=window.renderCalendar;
@@ -2590,5 +2590,37 @@ setTimeout(function(){
 },300);
 </script>
 
+<style>.edf-assistant-note{margin:12px 0;padding:12px 14px;border:1px solid #cfe2f5;border-radius:14px;background:#f3f9ff;color:#244668;font-size:12px;line-height:1.5}.edf-source-link{display:inline-block;margin:8px 0;color:#155eef;font-weight:800;font-size:12px}</style>
+<script id="edufisica-assistant-improvements">
+(function(){
+const originalGenerate=window.generarPlan;
+function sourceFor(code){const m=String(code||'').match(/^EF(\d{2}) OA (\d{2})$/);if(m){const n=Number(m[1]);if(n<=6)return 'https://www.curriculumnacional.cl/curriculum/1o-6o-basico/educacion-fisica-salud/'+n+'-basico/ef'+m[1]+'-oa-'+m[2];return 'https://www.curriculumnacional.cl/curriculum/7o-basico-2o-medio/educacion-fisica-salud/'+n+'-basico/ef'+m[1]+'-oa-'+m[2]}if(/^EF[12]M OA/.test(code||''))return 'https://www.curriculumnacional.cl/curriculum/7o-basico-2o-medio/educacion-fisica-salud';return 'https://www.curriculumnacional.cl/recursos/curriculum-3-4-medio-educacion-fisica-salud'}
+function objective(oa){const content=document.getElementById('contenido')?.value||'la actividad motriz';const duration=document.getElementById('duracion')?.value||'la clase';const focus=(document.getElementById('foco')?.value||'').trim();const verbs={Comprender:'explicar',Aplicar:'ejecutar y aplicar',Analizar:'analizar',Evaluar:'evaluar',Crear:'crear'};const verb=verbs[document.getElementById('bloom')?.value]||'aplicar';const ref=oa?'el OA de referencia '+oa.codigo+' (resumen local: '+oa.texto+')':'el objetivo curricular que seleccione el/la docente';return 'Al finalizar '+duration.toLowerCase()+', las y los estudiantes podrán '+verb+' habilidades de '+content.toLowerCase()+', en coherencia con '+ref+'. Se observará participación segura, respeto por las reglas y aplicación de lo practicado.'+(focus?' Considerando este foco del curso: '+focus+'.':'')}
+window.generarPlan=function(){if(typeof originalGenerate==='function')originalGenerate.apply(this,arguments);const code=document.getElementById('oaSelect')?.value;const oa=(typeof OA!=='undefined'?OA:[]).find(x=>x.codigo===code);const result=document.getElementById('planResult');if(!result)return;const h=[...result.querySelectorAll('h3')].find(x=>x.textContent.includes('Objetivo de clase'));const p=h?.parentElement?.querySelector('p');if(!p)return;p.textContent=objective(oa);const a=document.createElement('a');a.className='edf-source-link';a.href=sourceFor(code);a.target='_blank';a.rel='noopener';a.textContent=oa?'Ver OA '+oa.codigo+' en Currículum Nacional ↗':'Consultar Currículum Nacional ↗';p.append(document.createElement('br'),a);if(!h.parentElement.querySelector('.edf-assistant-note')){const n=document.createElement('div');n.className='edf-assistant-note';n.textContent='Propuesta local basada en el OA y los datos ingresados; no usa un modelo de IA ni sustituye la revisión docente. Verifica el texto oficial, los indicadores del programa y las adecuaciones de tu curso.';h.parentElement.append(n)}};
+const date=document.getElementById('fecha');if(date){const d=new Date();date.value=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')};if(date)date.addEventListener('change',()=>{if(!date.value)return;const d=new Date(date.value+'T12:00:00');const names=['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];const day=document.getElementById('dia');if(day)day.value=names[d.getDay()]})
+const render=window.renderOA;if(typeof render==='function')window.renderOA=function(){render.apply(this,arguments);document.querySelectorAll('#oaList .oa').forEach(card=>{const badge=card.querySelector('.code');if(!badge||card.querySelector('.edf-source-link'))return;const a=document.createElement('a');a.className='edf-source-link';a.href=sourceFor(badge.textContent);a.target='_blank';a.rel='noopener';a.textContent='Fuente oficial ↗';card.append(a)})};
+})();
+</script>
+<style>
+.edf-upgrade-panel{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center;margin:12px 0;padding:14px 16px;border:1px solid #cfe2f5;border-radius:15px;background:linear-gradient(135deg,#f4fbff,#f7f5ff);color:#244668;font-size:12px;line-height:1.5}
+.edf-upgrade-panel select{min-width:240px}.edf-source-link{display:inline-block;margin:8px 0;color:#155eef;font-weight:800;font-size:12px}
+[contenteditable="true"]{outline:2px dashed #b9cff3;outline-offset:4px;border-radius:5px;cursor:text}
+@media(max-width:700px){.edf-upgrade-panel{grid-template-columns:1fr}.edf-upgrade-panel select{min-width:0}}
+</style>
+<script id="edufisica-followup-upgrades">
+(function(){
+const MINEDUC='https://www.mineduc.cl/resoluciones-de-calendarios-escolares-regionales-2026/';
+const regions=['Arica y Parinacota','Tarapacá','Antofagasta','Atacama','Coquimbo','Valparaíso','Metropolitana','O’Higgins','Maule','Ñuble','Biobío','La Araucanía','Los Ríos','Los Lagos','Aysén','Magallanes'];
+function officialCourseUrl(course){const m=String(course||'').match(/^(\d)° (Básico|Medio)$/);if(m){const n=Number(m[1]);if(m[2]==='Básico')return 'https://www.curriculumnacional.cl/curriculum/1o-6o-basico/educacion-fisica-salud/'+n+'-basico';if(n>=3)return 'https://www.curriculumnacional.cl/curriculum/3o-4o-medio';return 'https://www.curriculumnacional.cl/curriculum/7o-basico-2o-medio/educacion-fisica-salud/'+n+'-medio'}return 'https://www.curriculumnacional.cl/recursos/curriculum-3-4-medio-educacion-fisica-salud'}
+function addRegionPicker(){const head=document.querySelector('#planner .calendarHead');if(!head||document.getElementById('edfRegion'))return;const box=document.createElement('div');box.className='edf-upgrade-panel';box.innerHTML='<div><b>Calendario escolar regional 2026</b><br>Las fechas lectivas y los recesos cambian según la región y el régimen del establecimiento. Elige tu región para abrir el índice oficial de MINEDUC.</div><div><select id="edfRegion" aria-labeAl="Región del calendario">'+regions.map(x=>'<option>'+x+'</option>').join('')+'</select> <a id="edfRegionLink" class="btn secondary" target="_blank" rel="noopener">Ver resolución ↗</a></div>';head.insertAdjacentElement('afterend',box);const sel=document.getElementById('edfRegion'),a=document.getElementById('edfRegionLink');function update(){const docs={'Arica y Parinacota':'https://arica.mineduc.cl/wp-content/uploads/sites/2/2025/12/CER-2026_-Arica.pdf','Atacama':'https://atacama.mineduc.cl/wp-content/uploads/sites/6/2025/12/CER-Atacama-2026.pdf','Coquimbo':'https://coquimbo.mineduc.cl/wp-content/uploads/sites/7/2025/12/01_CER-COQUIMBO.pdf','Valparaíso':'https://valparaiso.mineduc.cl/wp-content/uploads/sites/8/2026/01/calendarioescolar2026completo.pdf','Metropolitana':'https://metropolitana.mineduc.cl/wp-content/uploads/sites/9/2025/12/DD_4079499_251215_P.pdf','O’Higgins':'https://ohiggins.mineduc.cl/wp-content/uploads/sites/10/2025/12/CER_ohiggins.pdf','Maule':'https://maule.mineduc.cl/wp-content/uploads/sites/11/2025/12/CER-Maule.pdf','Ñuble':'https://xn--uble-fqa.mineduc.cl/wp-content/uploads/sites/112/2025/12/CER_nuble.pdf','Biobío':'https://biobio.mineduc.cl/wp-content/uploads/sites/12/2025/12/REX-2159-Calendario-Escolar-Regional-2026-Biobio.pdf','La Araucanía':'https://araucania.mineduc.cl/wp-content/uploads/sites/13/2025/12/CER-2026_araucania.pdf','Los Ríos':'https://losrios.mineduc.cl/wp-content/uploads/sites/14/2025/12/CER-2026_losrios.pdf','Los Lagos':'https://loslagos.mineduc.cl/wp-content/uploads/sites/15/2025/12/CALENDARIO-ESCOLAR-LOS-LAGOS-2026-1.pdf','Aysén':'https://aysen.mineduc.cl/wp-content/uploads/sites/16/2026/03/REX-MODIFICACIO%CC%81N-CALENDARIO-ESCOLAR-2026.pdf','Magallanes':'https://magallanes.mineduc.cl/wp-content/uploads/sites/17/2025/12/CER-Magallanes.pdf'};a.href=docs[sel.value]||MINEDUC;a.title=docs[sel.value]?'Resolución regional oficial 2026: '+sel.value:'Índice oficial MINEDUC de calendarios regionales 2026: busca '+sel.value;a.textContent=docs[sel.value]?'Abrir resolución ↗':'Buscar '+sel.value+' ↗'}sel.addEventListener('change',update);update()}
+function addCourseSource(){const hero=document.querySelector('#oa .hero');if(!hero||hero.querySelector('.edf-course-source'))return;const p=document.createElement('p');p.className='edf-course-source';const a=document.createElement('a');a.href=officialCourseUrl(document.getElementById('oaCurso')?.value||'1° Básico');a.target='_blank';a.rel='noopener';a.style.cssText='color:white;text-decoration:underline;font-weight:900';a.textContent='Consultar todos los OA oficiales del curso ↗';p.append(a);hero.append(p);document.getElementById('oaCurso')?.addEventListener('change',()=>{a.href=officialCourseUrl(document.getElementById('oaCurso').value)})}
+window.edfExportWord=function(id,name){const el=document.getElementById(id);if(!el){alert('Primero genera o abre una planificación.');return}const html='<!doctype html><html><head><meta charset="utf-8"><title>'+name+'</title><style>body{font-family:Arial,sans-serif;color:#142238}h2{color:#155eef}h3{color:#0d2845}.planHead{background:#eef5ff;padding:18px}.box{border:1px solid #dce4ee;border-radius:10px;padding:12px;margin:8px 0}.planGrid{display:block}table{border-collapse:collapse;width:100%}td,th{border:1px solid #aaa;padding:7px}</style></head><body>'+el.innerHTML+'</body></html>';const blob=new Blob(['\ufeff',html],{type:'application/msword'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=(name||'planificacion').replace(/[^a-z0-9_-]+/gi,'_')+'.doc';document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1500)};
+const originalGenerate=window.generarPlan;
+if(typeof originalGenerate==='function')window.generarPlan=function(){originalGenerate.apply(this,arguments);const result=document.getElementById('planResult');const heading=[...result.querySelectorAll('h3')].find(x=>x.textContent.includes('Objetivo de clase'));const p=heading?.parentElement?.querySelector('p');if(p){p.contentEditable='true';p.spellcheck=true;p.setAttribute('aria-label','Objetivo de clase editable');p.title='Haz clic para editar el objetivo antes de guardar';}const bar=result.querySelector('.plan > div[style*="padding"]');if(bar&&!bar.querySelector('.edf-word-export')){const b=document.createElement('button');b.className='btn secondary edf-word-export';b.textContent='📝 Descargar Word';b.onclick=()=>window.edfExportWord('currentPlan','Planificacion');bar.append(' ',b)}};
+const viewerBar=document.querySelector('.viewerInner > div:last-child');if(viewerBar&&!viewerBar.querySelector('.edf-word-viewer')){const b=document.createElement('button');b.className='btn secondary edf-word-viewer';b.textContent='📝 Word';b.onclick=()=>window.edfExportWord('viewerPlan','Planificacion');viewerBar.insertBefore(b,viewerBar.querySelector('button'))}
+const originalEval=window.crearEvaluacion;if(typeof originalEval==='function')window.crearEvaluacion=function(){originalEval.apply(this,arguments);const code=document.getElementById('evOA')?.value;const oa=(typeof OA!=='undefined'?OA:[]).find(x=>x.codigo===code);const result=document.getElementById('evResult');if(oa&&result&&!result.querySelector('.edf-eval-source')){const note=document.createElement('div');note.className='edf-assistant-note edf-eval-source';note.innerHTML='<b>OA de referencia:</b> '+oa.codigo+' · '+oa.texto+'<br><a href="'+officialCourseUrl(oa.curso)+'" target="_blank" rel="noopener">Revisar objetivo e indicadores oficiales ↗</a>';result.prepend(note)}};
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>{addRegionPicker();addCourseSource()},{once:true});else{addRegionPicker();addCourseSource()}
+})();
+</script>
 </body>
 </html>
